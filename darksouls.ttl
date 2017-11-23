@@ -14,7 +14,33 @@
 
 ###  http://www.darksouls.com/gender
 :gender rdf:type owl:ObjectProperty ,
-                 owl:FunctionalProperty .
+                 owl:FunctionalProperty ;
+        rdfs:range :Gender .
+
+
+###  http://www.darksouls.com/hasOffspring
+:hasOffspring rdf:type owl:ObjectProperty ;
+              owl:inverseOf :hasParent ;
+              rdfs:domain :Character ;
+              rdfs:range :Character .
+
+
+###  http://www.darksouls.com/hasParent
+:hasParent rdf:type owl:ObjectProperty ;
+           rdfs:domain :Character ;
+           rdfs:range :Character .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.darksouls.com/name
+:name rdf:type owl:DatatypeProperty .
+
+
+###  http://www.darksouls.com/title
+:title rdf:type owl:DatatypeProperty .
 
 
 #################################################################
@@ -33,27 +59,52 @@
 #    Individuals
 #################################################################
 
-###  http://www.darksouls.com/female
+###  http://www.darksouls.com/Female
 :Female rdf:type owl:NamedIndividual ,
                  :Gender .
 
 
-###  http://www.darksouls.com/gwyn
+###  http://www.darksouls.com/Firstborn
+:Firstborn rdf:type owl:NamedIndividual ,
+                    :Character ;
+           :gender :Male ;
+           :title "Firstborn" ,
+                  "God of War" .
+
+
+###  http://www.darksouls.com/Gwyn
 :Gwyn rdf:type owl:NamedIndividual ,
-               :Character .
+               :Character ;
+      :gender :Male ;
+      :hasOffspring :Firstborn ,
+                    :Gwyndolin ,
+                    :Gwynevere ;
+      :name "Gwyn" ;
+      :title "First Lord" ,
+             "Lord Gwyn" ,
+             "Lord of Cinder" .
 
 
-###  http://www.darksouls.com/gwyndolin
+###  http://www.darksouls.com/Gwyndolin
 :Gwyndolin rdf:type owl:NamedIndividual ,
-                    :Character .
+                    :Character ;
+           :gender :Male ;
+           :name "Gwyndolin" ;
+           :title "Dark Sun" ,
+                  "Darkmoon" .
 
 
-###  http://www.darksouls.com/gwynevere
+###  http://www.darksouls.com/Gwynevere
 :Gwynevere rdf:type owl:NamedIndividual ,
-                    :Character .
+                    :Character ;
+           :gender :Female ;
+           :name "Gwynevere" ;
+           :title "Goddess of Bounty" ,
+                  "Goddess of Fertility" ,
+                  "Princess of Sunlight" .
 
 
-###  http://www.darksouls.com/male
+###  http://www.darksouls.com/Male
 :Male rdf:type owl:NamedIndividual ,
                :Gender .
 

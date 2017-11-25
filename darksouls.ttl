@@ -12,12 +12,6 @@
 #    Object Properties
 #################################################################
 
-###  http://www.darksouls.com/gender
-:gender rdf:type owl:ObjectProperty ,
-                 owl:FunctionalProperty ;
-        rdfs:range :Gender .
-
-
 ###  http://www.darksouls.com/hasOffspring
 :hasOffspring rdf:type owl:ObjectProperty ;
               owl:inverseOf :hasParent ;
@@ -37,17 +31,31 @@
          rdfs:range :Soul .
 
 
+###  http://www.darksouls.com/mentionedBy
+:mentionedBy rdf:type owl:ObjectProperty ;
+             owl:inverseOf :mentions .
+
+
 ###  http://www.darksouls.com/mentions
 :mentions rdf:type owl:ObjectProperty .
 
 
 ###  http://www.darksouls.com/ownedBy
 :ownedBy rdf:type owl:ObjectProperty ;
-         owl:inverseOf :owns .
+         owl:inverseOf :ownerOf .
 
 
-###  http://www.darksouls.com/owns
-:owns rdf:type owl:ObjectProperty .
+###  http://www.darksouls.com/ownerOf
+:ownerOf rdf:type owl:ObjectProperty .
+
+
+###  http://www.darksouls.com/usedBy
+:usedBy rdf:type owl:ObjectProperty ;
+        owl:inverseOf :userOf .
+
+
+###  http://www.darksouls.com/userOf
+:userOf rdf:type owl:ObjectProperty .
 
 
 #################################################################
@@ -56,6 +64,10 @@
 
 ###  http://www.darksouls.com/description
 :description rdf:type owl:DatatypeProperty .
+
+
+###  http://www.darksouls.com/gender
+:gender rdf:type owl:DatatypeProperty .
 
 
 ###  http://www.darksouls.com/name
@@ -79,10 +91,6 @@
           rdfs:subClassOf :Group .
 
 
-###  http://www.darksouls.com/Gender
-:Gender rdf:type owl:Class .
-
-
 ###  http://www.darksouls.com/Group
 :Group rdf:type owl:Class .
 
@@ -95,6 +103,10 @@
                       ] .
 
 
+###  http://www.darksouls.com/Miracle
+:Miracle rdf:type owl:Class .
+
+
 ###  http://www.darksouls.com/Soul
 :Soul rdf:type owl:Class .
 
@@ -103,15 +115,10 @@
 #    Individuals
 #################################################################
 
-###  http://www.darksouls.com/Female
-:Female rdf:type owl:NamedIndividual ,
-                 :Gender .
-
-
 ###  http://www.darksouls.com/Firstborn
 :Firstborn rdf:type owl:NamedIndividual ,
                     :Character ;
-           :gender :Male ;
+           :gender "Male" ;
            :title "Firstborn" ,
                   "God of War" .
 
@@ -119,11 +126,11 @@
 ###  http://www.darksouls.com/Gwyn
 :Gwyn rdf:type owl:NamedIndividual ,
                :Character ;
-      :gender :Male ;
       :hasOffspring :Firstborn ,
                     :Gwyndolin ,
                     :Gwynevere ;
       :hasSoul :SoulOfGwyn ;
+      :gender "Male" ;
       :name "Gwyn" ;
       :title "First Lord" ,
              "God of the Sun" ,
@@ -134,7 +141,7 @@
 ###  http://www.darksouls.com/Gwyndolin
 :Gwyndolin rdf:type owl:NamedIndividual ,
                     :Character ;
-           :gender :Male ;
+           :gender "Male" ;
            :name "Gwyndolin" ;
            :title "Dark Sun" ,
                   "Darkmoon" .
@@ -143,21 +150,26 @@
 ###  http://www.darksouls.com/Gwynevere
 :Gwynevere rdf:type owl:NamedIndividual ,
                     :Character ;
-           :gender :Female ;
+           :gender "Female" ;
            :name "Gwynevere" ;
            :title "Goddess of Bounty" ,
                   "Goddess of Fertility" ,
                   "Princess of Sunlight" .
 
 
-###  http://www.darksouls.com/Male
-:Male rdf:type owl:NamedIndividual ,
-               :Gender .
+###  http://www.darksouls.com/Solaire
+:Solaire rdf:type owl:NamedIndividual ,
+                  :Character ;
+         :userOf :SunlightSpear ;
+         :gender "Male" ;
+         :name "Solaire" ;
+         :title "Solaire of Astora" .
 
 
 ###  http://www.darksouls.com/SoulOfGwyn
 :SoulOfGwyn rdf:type owl:NamedIndividual ,
                      :Soul ;
+            :mentions :Gwyn ;
             :description """Soul of Gwyn, the Lord of Sunlight
 and Cinder, who linked the First Flame.
 
@@ -166,6 +178,29 @@ Gods, and burned as cinder for the First
 Flame, but even so, Lord Gwyn's soul
 is a powerful thing indeed. ~DS1""" ;
             :name "Soul of Gwyn" .
+
+
+###  http://www.darksouls.com/SunlightSpear
+:SunlightSpear rdf:type owl:NamedIndividual ,
+                        :Miracle ;
+               :mentions :Gwyn ;
+               :description """A miracle that launches a spear of sunlight.
+Powered with immense wondrous souls.
+
+One of the ancient original miracles,
+said to have existed from the infancy
+of the very world. ~DS2""" ,
+                            """Miracle born from the fading soul of Gwyn.
+
+Hurl sunlight spear.
+
+In the war that marked the dawn of the Age of Fire,
+Gwyn wielded these rays of sunlight, which remains fierce even as they fade. ~DS1""" ,
+                            """Miracle of Gwyn, the First Lord.
+Hurls a sunlight spear.
+
+The tales of Gwyn's Archdragon hunts describe the inception of the Age of Fire. ~DS3""" ;
+               :name "Sunlight Spear" .
 
 
 ###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi

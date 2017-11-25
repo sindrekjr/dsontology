@@ -12,6 +12,14 @@
 #    Object Properties
 #################################################################
 
+###  http://www.darksouls.com/adjacentTo
+:adjacentTo rdf:type owl:ObjectProperty ,
+                     owl:SymmetricProperty ,
+                     owl:IrreflexiveProperty ;
+            rdfs:domain :Place ;
+            rdfs:range :Place .
+
+
 ###  http://www.darksouls.com/appearsIn
 :appearsIn rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf :hasVisited .

@@ -273,6 +273,22 @@
 :description rdf:type owl:DatatypeProperty .
 
 
+###  http://www.darksouls.com/game
+:game rdf:type owl:DatatypeProperty ;
+      rdfs:range [ rdf:type rdfs:Datatype ;
+                   owl:oneOf [ rdf:type rdf:List ;
+                               rdf:first "DS1" ;
+                               rdf:rest [ rdf:type rdf:List ;
+                                          rdf:first "DS2" ;
+                                          rdf:rest [ rdf:type rdf:List ;
+                                                     rdf:first "DS3" ;
+                                                     rdf:rest rdf:nil
+                                                   ]
+                                        ]
+                             ]
+                 ] .
+
+
 ###  http://www.darksouls.com/gender
 :gender rdf:type owl:DatatypeProperty ,
                  owl:FunctionalProperty ;

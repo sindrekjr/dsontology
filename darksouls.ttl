@@ -61,6 +61,8 @@
 ###  http://www.darksouls.com/emblem
 :emblem rdf:type owl:ObjectProperty ,
                  owl:FunctionalProperty ,
+                 owl:InverseFunctionalProperty ,
+                 owl:AsymmetricProperty ,
                  owl:IrreflexiveProperty ;
         rdfs:range :Emblem .
 
@@ -78,6 +80,7 @@
 
 ###  http://www.darksouls.com/family
 :family rdf:type owl:ObjectProperty ,
+                 owl:SymmetricProperty ,
                  owl:TransitiveProperty ;
         rdfs:domain :Character ;
         rdfs:range :Character .
@@ -111,7 +114,9 @@
 
 ###  http://www.darksouls.com/hasVisited
 :hasVisited rdf:type owl:ObjectProperty ;
-            rdfs:subPropertyOf :location .
+            rdfs:subPropertyOf :location ;
+            rdf:type owl:AsymmetricProperty ,
+                     owl:IrreflexiveProperty .
 
 
 ###  http://www.darksouls.com/home
@@ -265,8 +270,7 @@
 #################################################################
 
 ###  http://www.darksouls.com/alias
-:alias rdf:type owl:DatatypeProperty ;
-       rdfs:subPropertyOf :name .
+:alias rdf:type owl:DatatypeProperty .
 
 
 ###  http://www.darksouls.com/description
@@ -304,12 +308,14 @@
 
 
 ###  http://www.darksouls.com/name
-:name rdf:type owl:DatatypeProperty .
+:name rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf :alias ;
+      rdf:type owl:FunctionalProperty .
 
 
 ###  http://www.darksouls.com/title
 :title rdf:type owl:DatatypeProperty ;
-       rdfs:subPropertyOf :name .
+       rdfs:subPropertyOf :alias .
 
 
 #################################################################
@@ -318,6 +324,11 @@
 
 ###  http://www.darksouls.com/Actor
 :Actor rdf:type owl:Class .
+
+
+###  http://www.darksouls.com/Building
+:Building rdf:type owl:Class ;
+          rdfs:subClassOf :District .
 
 
 ###  http://www.darksouls.com/Character
@@ -439,6 +450,8 @@
 :AnorLondo rdf:type owl:NamedIndividual ,
                     :City ;
            :location :Lordran ;
+           :game "DS1" ,
+                 "DS3" ;
            :name "Anor Londo" .
 
 
@@ -446,6 +459,15 @@
 :Astora rdf:type owl:NamedIndividual ,
                  :Kingdom ;
         :name "Kingdom" .
+
+
+###  http://www.darksouls.com/CathedralOfBlue
+:CathedralOfBlue rdf:type owl:NamedIndividual ,
+                          :Building ;
+                 :adjacentTo :HeideTowerOfFlame ;
+                 :location :Drangleic ;
+                 :game "DS2" ;
+                 :name "Cathedral of Blue" .
 
 
 ###  http://www.darksouls.com/DragonslayerSpear
@@ -459,6 +481,13 @@
 The spear of the knight known as the Dragonslayer was imbued with the power of lightning, and shattered the stone scales of dragons. Strong attack unleashes its latent power.""" ,
                                 "Cross spear born from the Soul of Ornstein, a Dragonslayer guarding Anor Londo cathedral. Inflicts lightning damage; effective against dragons. Two-handed thrust relies on cross and buries spear deep within a dragon's hide, and sends human foes flying." ;
                    :name "Dragonslayer Spear" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :DragonslayerSpear ;
+   owl:annotatedProperty :craftedFrom ;
+   owl:annotatedTarget :OrnsteinSoul ;
+   rdfs:comment "DS1"
+ ] .
 
 [ rdf:type owl:Axiom ;
    owl:annotatedSource :DragonslayerSpear ;
@@ -476,12 +505,12 @@ The spear of the knight known as the Dragonslayer was imbued with the power of l
    rdfs:label "Dark Souls 1"
  ] .
 
-[ rdf:type owl:Axiom ;
-   owl:annotatedSource :DragonslayerSpear ;
-   owl:annotatedProperty :craftedFrom ;
-   owl:annotatedTarget :OrnsteinSoul ;
-   rdfs:comment "DS1"
- ] .
+
+###  http://www.darksouls.com/Drangleic
+:Drangleic rdf:type owl:NamedIndividual ,
+                    :Kingdom ;
+           :game "DS2" ;
+           :name "Drangleic" .
 
 
 ###  http://www.darksouls.com/Firstborn
@@ -678,6 +707,14 @@ is a powerful thing indeed.""" ;
                   "Princess" .
 
 
+###  http://www.darksouls.com/HeideTowerOfFlame
+:HeideTowerOfFlame rdf:type owl:NamedIndividual ,
+                            :Place ;
+                   :location :Drangleic ;
+                   :game "DS2" ;
+                   :name "Heide's Tower of Flame" .
+
+
 ###  http://www.darksouls.com/Izalith
 :Izalith rdf:type owl:NamedIndividual ,
                   :City ;
@@ -712,9 +749,11 @@ This ring strengthens counters with pierce weapons. His lugged spear is said to 
 ###  http://www.darksouls.com/OldDragonslayer
 :OldDragonslayer rdf:type owl:NamedIndividual ,
                           :Character ;
+                 :appearsIn :CathedralOfBlue ;
                  :soul :OldDragonslayerSoul ;
                  :weapon :DragonslayerSpear ;
                  :alias "Old Dragonslayer" ;
+                 :game "DS2" ;
                  :title "Dragonslayer" ,
                         "Knight" .
 
@@ -783,6 +822,14 @@ Use to acquire a large amount of souls, or to create a unique weapon.""" ;
  ] .
 
 
+###  http://www.darksouls.com/PrincessGuard
+:PrincessGuard rdf:type owl:NamedIndividual ,
+                        :Covenant ;
+               :leader :Gwynevere ;
+               :rewardsItem :RingSunPrincess ;
+               :name "Princess's Guard" .
+
+
 ###  http://www.darksouls.com/RingFirstborn
 :RingFirstborn rdf:type owl:NamedIndividual ,
                         :Ring ;
@@ -822,27 +869,17 @@ Today, even his name is not known.""" ;
                            :Flann ,
                            :Gwyn ,
                            :Gwynevere ;
-                 :description """This ring is granted to those who enter a
-Covenant with Gwynevere, daughter of Lord Gywn
-and the Princess of Sunlight. This slightly
-warm ring boosts the synergy of miracles.
+                 :description """This ring is granted to those who enter a Covenant with Gwynevere, daughter of Lord Gywn and the Princess of Sunlight. This slightly warm ring boosts the synergy of miracles.
 
-The Princess of Sunlight Gwynevere left
-Anor Londo along many other deities,
-and later became wife to Flame God Flann.""" ;
+The Princess of Sunlight Gwynevere left Anor Londo along many other deities, and later became wife to Flame God Flann.""" ;
                  :name "Ring of the Sun Princess" .
 
 [ rdf:type owl:Axiom ;
    owl:annotatedSource :RingSunPrincess ;
    owl:annotatedProperty :description ;
-   owl:annotatedTarget """This ring is granted to those who enter a
-Covenant with Gwynevere, daughter of Lord Gywn
-and the Princess of Sunlight. This slightly
-warm ring boosts the synergy of miracles.
+   owl:annotatedTarget """This ring is granted to those who enter a Covenant with Gwynevere, daughter of Lord Gywn and the Princess of Sunlight. This slightly warm ring boosts the synergy of miracles.
 
-The Princess of Sunlight Gwynevere left
-Anor Londo along many other deities,
-and later became wife to Flame God Flann.""" ;
+The Princess of Sunlight Gwynevere left Anor Londo along many other deities, and later became wife to Flame God Flann.""" ;
    rdfs:comment "DS1"
  ] .
 
@@ -862,6 +899,31 @@ and later became wife to Flame God Flann.""" ;
          :alias "Solaire of Astora" ;
          :gender "Male" ;
          :name "Solaire" .
+
+
+###  http://www.darksouls.com/SunPrincessRing
+:SunPrincessRing rdf:type owl:NamedIndividual ,
+                          :Ring ;
+                 :location :AnorLondo ;
+                 :mentions :Gwyn ,
+                           :Gwynevere ;
+                 :description """Ring associated with Gwynevere, princess of sunlight and eldest daughter of Gwyn, the First Lord.
+
+The ring is vaguely warm, like a beam of sunlight, and gradually restores HP.
+
+Gwynevere left her home with a great many other deities, and became a wife and mother, raising several heavenly children.""" ;
+                 :name "Sun Princess Ring" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :SunPrincessRing ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """Ring associated with Gwynevere, princess of sunlight and eldest daughter of Gwyn, the First Lord.
+
+The ring is vaguely warm, like a beam of sunlight, and gradually restores HP.
+
+Gwynevere left her home with a great many other deities, and became a wife and mother, raising several heavenly children.""" ;
+   rdfs:comment "DS3"
+ ] .
 
 
 ###  http://www.darksouls.com/SunlightBlade

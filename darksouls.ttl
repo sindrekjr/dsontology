@@ -12,16 +12,25 @@
 #    Object Properties
 #################################################################
 
+###  http://www.darksouls.com/appearsIn
+:appearsIn rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :hasVisited .
+
+
 ###  http://www.darksouls.com/belongsTo
 :belongsTo rdf:type owl:ObjectProperty ;
-           owl:inverseOf :ownerOf .
+           owl:inverseOf :ownerOf ;
+           rdf:type owl:IrreflexiveProperty ;
+           rdfs:domain :Item ;
+           rdfs:range :Actor .
 
 
 ###  http://www.darksouls.com/child
 :child rdf:type owl:ObjectProperty ;
        rdfs:subPropertyOf :family ;
        owl:inverseOf :parent ;
-       rdf:type owl:AsymmetricProperty .
+       rdf:type owl:AsymmetricProperty ;
+       owl:propertyDisjointWith :parent .
 
 
 ###  http://www.darksouls.com/commonSoul
@@ -33,26 +42,80 @@
 
 
 ###  http://www.darksouls.com/commonality
-:commonality rdf:type owl:ObjectProperty ,
-                      owl:SymmetricProperty .
+:commonality rdf:type owl:ObjectProperty .
+
+
+###  http://www.darksouls.com/craftedFrom
+:craftedFrom rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :obtainedFrom .
 
 
 ###  http://www.darksouls.com/emblem
-:emblem rdf:type owl:ObjectProperty ;
+:emblem rdf:type owl:ObjectProperty ,
+                 owl:FunctionalProperty ,
+                 owl:IrreflexiveProperty ;
         rdfs:range :Emblem .
 
 
+###  http://www.darksouls.com/enemyOf
+:enemyOf rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :knowsOf .
+
+
+###  http://www.darksouls.com/equipment
+:equipment rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :usesItem ;
+           rdfs:range :Equipment .
+
+
 ###  http://www.darksouls.com/family
-:family rdf:type owl:ObjectProperty ;
+:family rdf:type owl:ObjectProperty ,
+                 owl:TransitiveProperty ;
         rdfs:domain :Character ;
         rdfs:range :Character .
 
 
+###  http://www.darksouls.com/fights
+:fights rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :knowsOf ;
+        rdf:type owl:SymmetricProperty .
+
+
+###  http://www.darksouls.com/friendOf
+:friendOf rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :knowsOf .
+
+
+###  http://www.darksouls.com/hasItem
+:hasItem rdf:type owl:ObjectProperty ,
+                  owl:IrreflexiveProperty ;
+         rdfs:domain :Actor ;
+         rdfs:range :Item .
+
+
 ###  http://www.darksouls.com/hasMember
 :hasMember rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :knowsOf ;
            owl:inverseOf :memberOf ;
            rdfs:domain :Organization ;
            rdfs:range :Character .
+
+
+###  http://www.darksouls.com/hasVisited
+:hasVisited rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :location .
+
+
+###  http://www.darksouls.com/home
+:home rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf :hasVisited ;
+      rdf:type owl:FunctionalProperty .
+
+
+###  http://www.darksouls.com/knowsOf
+:knowsOf rdf:type owl:ObjectProperty ;
+         rdfs:domain :Actor ;
+         rdfs:range :Actor .
 
 
 ###  http://www.darksouls.com/leader
@@ -67,8 +130,21 @@
           rdfs:subPropertyOf :memberOf .
 
 
+###  http://www.darksouls.com/location
+:location rdf:type owl:ObjectProperty ,
+                   owl:TransitiveProperty ;
+          rdfs:range :Place .
+
+
+###  http://www.darksouls.com/loyalTo
+:loyalTo rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :knowsOf ;
+         rdf:type owl:TransitiveProperty .
+
+
 ###  http://www.darksouls.com/memberOf
 :memberOf rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :loyalTo ;
           rdfs:domain :Character ;
           rdfs:range :Organization .
 
@@ -82,15 +158,38 @@
 :mentions rdf:type owl:ObjectProperty .
 
 
+###  http://www.darksouls.com/obtainedFrom
+:obtainedFrom rdf:type owl:ObjectProperty ,
+                       owl:IrreflexiveProperty .
+
+
 ###  http://www.darksouls.com/ownerOf
 :ownerOf rdf:type owl:ObjectProperty ;
-         rdfs:domain :Character .
+         rdfs:subPropertyOf :hasItem ;
+         rdf:type owl:IrreflexiveProperty .
 
 
 ###  http://www.darksouls.com/parent
 :parent rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf :family ;
         rdf:type owl:AsymmetricProperty .
+
+
+###  http://www.darksouls.com/rewardedBy
+:rewardedBy rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :obtainedFrom ;
+            owl:inverseOf :rewardsItem .
+
+
+###  http://www.darksouls.com/rewardsItem
+:rewardsItem rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :hasItem .
+
+
+###  http://www.darksouls.com/sellsItem
+:sellsItem rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :hasItem ;
+           owl:inverseOf :soldBy .
 
 
 ###  http://www.darksouls.com/sibling
@@ -102,10 +201,22 @@
                                 ) .
 
 
+###  http://www.darksouls.com/soldBy
+:soldBy rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf :obtainedFrom .
+
+
 ###  http://www.darksouls.com/soul
 :soul rdf:type owl:ObjectProperty ;
       rdfs:subPropertyOf :ownerOf ;
       rdfs:range :Soul .
+
+
+###  http://www.darksouls.com/speaker
+:speaker rdf:type owl:ObjectProperty ,
+                  owl:FunctionalProperty ;
+         rdfs:domain :Dialogue ;
+         rdfs:range :Character .
 
 
 ###  http://www.darksouls.com/spouse
@@ -114,19 +225,30 @@
         rdf:type owl:SymmetricProperty .
 
 
+###  http://www.darksouls.com/tradedFor
+:tradedFor rdf:type owl:ObjectProperty ,
+                    owl:SymmetricProperty .
+
+
+###  http://www.darksouls.com/transposedFrom
+:transposedFrom rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :obtainedFrom .
+
+
 ###  http://www.darksouls.com/usedBy
 :usedBy rdf:type owl:ObjectProperty ;
-        owl:inverseOf :uses .
+        rdfs:subPropertyOf :belongsTo ;
+        owl:inverseOf :usesItem .
 
 
-###  http://www.darksouls.com/uses
-:uses rdf:type owl:ObjectProperty .
+###  http://www.darksouls.com/usesItem
+:usesItem rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :ownerOf .
 
 
 ###  http://www.darksouls.com/weapon
 :weapon rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf :ownerOf ,
-                           :uses ;
+        rdfs:subPropertyOf :usesItem ;
         rdfs:range :Weapon .
 
 
@@ -144,7 +266,17 @@
 
 
 ###  http://www.darksouls.com/gender
-:gender rdf:type owl:DatatypeProperty .
+:gender rdf:type owl:DatatypeProperty ,
+                 owl:FunctionalProperty ;
+        rdfs:range [ rdf:type rdfs:Datatype ;
+                     owl:oneOf [ rdf:type rdf:List ;
+                                 rdf:first "Female" ;
+                                 rdf:rest [ rdf:type rdf:List ;
+                                            rdf:first "Male" ;
+                                            rdf:rest rdf:nil
+                                          ]
+                               ]
+                   ] .
 
 
 ###  http://www.darksouls.com/name
@@ -160,8 +292,18 @@
 #    Classes
 #################################################################
 
+###  http://www.darksouls.com/Actor
+:Actor rdf:type owl:Class .
+
+
 ###  http://www.darksouls.com/Character
-:Character rdf:type owl:Class .
+:Character rdf:type owl:Class ;
+           rdfs:subClassOf :Actor .
+
+
+###  http://www.darksouls.com/City
+:City rdf:type owl:Class ;
+      rdfs:subClassOf :Kingdom .
 
 
 ###  http://www.darksouls.com/Covenant
@@ -169,9 +311,28 @@
           rdfs:subClassOf :Organization .
 
 
+###  http://www.darksouls.com/Dialogue
+:Dialogue rdf:type owl:Class .
+
+
+###  http://www.darksouls.com/District
+:District rdf:type owl:Class ;
+          rdfs:subClassOf :City .
+
+
 ###  http://www.darksouls.com/Emblem
 :Emblem rdf:type owl:Class ;
         rdfs:subClassOf :Item .
+
+
+###  http://www.darksouls.com/Equipment
+:Equipment rdf:type owl:Class ;
+           rdfs:subClassOf :Item .
+
+
+###  http://www.darksouls.com/Greatsword
+:Greatsword rdf:type owl:Class ;
+            rdfs:subClassOf :Weapon .
 
 
 ###  http://www.darksouls.com/Item
@@ -182,8 +343,14 @@
                       ] .
 
 
+###  http://www.darksouls.com/Kingdom
+:Kingdom rdf:type owl:Class ;
+         rdfs:subClassOf :Place .
+
+
 ###  http://www.darksouls.com/Miracle
-:Miracle rdf:type owl:Class .
+:Miracle rdf:type owl:Class ;
+         rdfs:subClassOf :Spell .
 
 
 ###  http://www.darksouls.com/Order
@@ -192,25 +359,42 @@
 
 
 ###  http://www.darksouls.com/Organization
-:Organization rdf:type owl:Class .
+:Organization rdf:type owl:Class ;
+              rdfs:subClassOf :Actor .
 
 
 ###  http://www.darksouls.com/Place
 :Place rdf:type owl:Class .
 
 
+###  http://www.darksouls.com/Pyromancy
+:Pyromancy rdf:type owl:Class ;
+           rdfs:subClassOf :Spell .
+
+
 ###  http://www.darksouls.com/Ring
 :Ring rdf:type owl:Class ;
-      rdfs:subClassOf :Item .
+      rdfs:subClassOf :Equipment .
+
+
+###  http://www.darksouls.com/Sorcery
+:Sorcery rdf:type owl:Class ;
+         rdfs:subClassOf :Spell .
 
 
 ###  http://www.darksouls.com/Soul
-:Soul rdf:type owl:Class .
+:Soul rdf:type owl:Class ;
+      rdfs:subClassOf :Item .
 
 
-###  http://www.darksouls.com/Swordspear
-:Swordspear rdf:type owl:Class ;
-            rdfs:subClassOf :Weapon .
+###  http://www.darksouls.com/Spear
+:Spear rdf:type owl:Class ;
+       rdfs:subClassOf :Weapon .
+
+
+###  http://www.darksouls.com/Spell
+:Spell rdf:type owl:Class ;
+       rdfs:subClassOf :Item .
 
 
 ###  http://www.darksouls.com/Talisman
@@ -229,20 +413,57 @@
 
 ###  http://www.darksouls.com/AnorLondo
 :AnorLondo rdf:type owl:NamedIndividual ,
-                    :Place ;
+                    :City ;
+           :location :Lordran ;
            :name "Anor Londo" .
+
+
+###  http://www.darksouls.com/Astora
+:Astora rdf:type owl:NamedIndividual ,
+                 :Kingdom ;
+        :name "Kingdom" .
 
 
 ###  http://www.darksouls.com/DragonslayerSpear
 :DragonslayerSpear rdf:type owl:NamedIndividual ,
-                            :Swordspear ;
+                            :Spear ;
+                   :craftedFrom :OrnsteinSoul ;
+                   :mentions :AnorLondo ,
+                             :Ornstein ;
+                   :description """A ranseur forged from the soul of the Old Dragonslayer.
+
+The spear of the knight known as the Dragonslayer was imbued with the power of lightning, and shattered the stone scales of dragons. Strong attack unleashes its latent power.""" ,
+                                "Cross spear born from the Soul of Ornstein, a Dragonslayer guarding Anor Londo cathedral. Inflicts lightning damage; effective against dragons. Two-handed thrust relies on cross and buries spear deep within a dragon's hide, and sends human foes flying." ;
                    :name "Dragonslayer Spear" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :DragonslayerSpear ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """A ranseur forged from the soul of the Old Dragonslayer.
+
+The spear of the knight known as the Dragonslayer was imbued with the power of lightning, and shattered the stone scales of dragons. Strong attack unleashes its latent power.""" ;
+   rdfs:label "Dark Soul 2"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :DragonslayerSpear ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget "Cross spear born from the Soul of Ornstein, a Dragonslayer guarding Anor Londo cathedral. Inflicts lightning damage; effective against dragons. Two-handed thrust relies on cross and buries spear deep within a dragon's hide, and sends human foes flying." ;
+   rdfs:label "Dark Souls 1"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :DragonslayerSpear ;
+   owl:annotatedProperty :craftedFrom ;
+   owl:annotatedTarget :OrnsteinSoul ;
+   rdfs:comment "DS1"
+ ] .
 
 
 ###  http://www.darksouls.com/Firstborn
 :Firstborn rdf:type owl:NamedIndividual ,
                     :Character ;
-           :uses :Swordspear ;
+           :usesItem :Swordspear ;
            :alias "Firstborn" ,
                   "God of War" ,
                   "Gwyn's Firstborn" ;
@@ -264,6 +485,7 @@
 ###  http://www.darksouls.com/FourKnightsOfGwyn
 :FourKnightsOfGwyn rdf:type owl:NamedIndividual ,
                             :Order ;
+                   :loyalTo :Gwyn ;
                    :name "Four Knights of Gwyn" .
 
 
@@ -278,24 +500,76 @@ Hurl giant lightning spear.
 
 The weapon of the God of War, who inherited
 the sunlight of Lord Gwyn, but had
-respect only for arms, and nothing else. ~DS1""" ,
+respect only for arms, and nothing else.""" ,
                                   """Primal account of Lightning Spear, which tells of an ancestral dragonslayer.
 
 Hurls a giant lightning spear.
 
 Gwyn, the First Lord, slew dragons with his sunlight spear, a tradition upheld by his firstborn and the greatspear he wielded.
 
-Much of this resplendent tale of father and son, while epic, remains tragically untold. ~DS3""" ;
+Much of this resplendent tale of father and son, while epic, remains tragically untold.""" ;
                      :name "Great Lightning Spear" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :GreatLightningSpear ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """Miracle passed down by
+those bound to the Warrior of Sunlight covenant.
+Hurl giant lightning spear.
+
+The weapon of the God of War, who inherited
+the sunlight of Lord Gwyn, but had
+respect only for arms, and nothing else.""" ;
+   rdfs:comment "DS1"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :GreatLightningSpear ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """Primal account of Lightning Spear, which tells of an ancestral dragonslayer.
+
+Hurls a giant lightning spear.
+
+Gwyn, the First Lord, slew dragons with his sunlight spear, a tradition upheld by his firstborn and the greatspear he wielded.
+
+Much of this resplendent tale of father and son, while epic, remains tragically untold.""" ;
+   rdfs:comment "DS3"
+ ] .
+
+
+###  http://www.darksouls.com/GreatLordGreatsword
+:GreatLordGreatsword rdf:type owl:NamedIndividual ,
+                              :Greatsword ;
+                     :craftedFrom :GwynSoul ;
+                     :mentions :Gwyn ;
+                     :description "Greatsword born from the soul of Gwyn, Lord of Cinder. As bearer of the ultimate soul, Gwyn wielded the bolts of the sun, but before linking the fire, divided that power amongst his children, and set off with only this great sword as his companion." ;
+                     :name "Great Lord Greatsword" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :GreatLordGreatsword ;
+   owl:annotatedProperty :craftedFrom ;
+   owl:annotatedTarget :GwynSoul ;
+   rdfs:comment "DS1"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :GreatLordGreatsword ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget "Greatsword born from the soul of Gwyn, Lord of Cinder. As bearer of the ultimate soul, Gwyn wielded the bolts of the sun, but before linking the fire, divided that power amongst his children, and set off with only this great sword as his companion." ;
+   rdfs:comment "DS1"
+ ] .
 
 
 ###  http://www.darksouls.com/Gwyn
 :Gwyn rdf:type owl:NamedIndividual ,
                :Character ;
+      :appearsIn :KilnFirstFlame ;
       :child :Firstborn ,
              :Gwyndolin ,
              :Gwynevere ;
-      :soul :SoulOfGwyn ;
+      :home :AnorLondo ;
+      :soul :GwynSoul ;
+      :weapon :GreatLordGreatsword ;
       :alias "First Lord" ,
              "God of Sunlight" ,
              "God of the Sun" ,
@@ -307,10 +581,54 @@ Much of this resplendent tale of father and son, while epic, remains tragically 
              "Lord" ,
              "Lord of Cinder" .
 
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :Gwyn ;
+   owl:annotatedProperty :appearsIn ;
+   owl:annotatedTarget :KilnFirstFlame ;
+   rdfs:comment "DS1"
+ ] .
+
+
+###  http://www.darksouls.com/GwynSoul
+:GwynSoul rdf:type owl:NamedIndividual ,
+                   :Soul ;
+          :mentions :Gwyn ;
+          :tradedFor :SunlightSpear ;
+          :description """Soul of Gwyn, the Lord of Sunlight
+and Cinder, who linked the First Flame.
+
+Lord Gwyn bequeathed most of his power to the
+Gods, and burned as cinder for the First
+Flame, but even so, Lord Gwyn's soul
+is a powerful thing indeed.""" ;
+          :name "Soul of Gwyn, Lord of Cinder" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :GwynSoul ;
+   owl:annotatedProperty :tradedFor ;
+   owl:annotatedTarget :SunlightSpear ;
+   rdfs:comment "DS1"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :GwynSoul ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """Soul of Gwyn, the Lord of Sunlight
+and Cinder, who linked the First Flame.
+
+Lord Gwyn bequeathed most of his power to the
+Gods, and burned as cinder for the First
+Flame, but even so, Lord Gwyn's soul
+is a powerful thing indeed.""" ;
+   rdfs:comment "DS1"
+ ] .
+
 
 ###  http://www.darksouls.com/Gwyndolin
 :Gwyndolin rdf:type owl:NamedIndividual ,
                     :Character ;
+           :appearsIn :AnorLondo ;
+           :home :AnorLondo ;
            :alias "Dark Sun" ,
                   "Darkmoon" ;
            :gender "Male" ;
@@ -322,6 +640,7 @@ Much of this resplendent tale of father and son, while epic, remains tragically 
 ###  http://www.darksouls.com/Gwynevere
 :Gwynevere rdf:type owl:NamedIndividual ,
                     :Character ;
+           :home :AnorLondo ;
            :spouse :Flann ;
            :alias "Goddess of Bounty" ,
                   "Goddess of Fertility" ,
@@ -335,9 +654,74 @@ Much of this resplendent tale of father and son, while epic, remains tragically 
                   "Princess" .
 
 
+###  http://www.darksouls.com/Izalith
+:Izalith rdf:type owl:NamedIndividual ,
+                  :City ;
+         :alias "Lost Izalith" ;
+         :name "Izalith" .
+
+
+###  http://www.darksouls.com/KilnFirstFlame
+:KilnFirstFlame rdf:type owl:NamedIndividual ,
+                         :Place ;
+                :name "Kiln of the First Flame" .
+
+
+###  http://www.darksouls.com/LeoRing
+:LeoRing rdf:type owl:NamedIndividual ,
+                  :Ring ;
+         :mentions :FourKnightsOfGwyn ,
+                   :Gwyn ,
+                   :Ornstein ;
+         :description """One of the special rings granted to the four knights of Gwyn. The Leo Ring belonged to Ornstein the Dragonslayer.
+
+This ring strengthens counters with pierce weapons. His lugged spear is said to have sliced a boulder in two.""" ;
+         :name "Leo Ring" .
+
+
+###  http://www.darksouls.com/Lordran
+:Lordran rdf:type owl:NamedIndividual ,
+                  :Kingdom ;
+         :name "Lordran" .
+
+
+###  http://www.darksouls.com/OldDragonslayer
+:OldDragonslayer rdf:type owl:NamedIndividual ,
+                          :Character ;
+                 :soul :OldDragonslayerSoul ;
+                 :weapon :DragonslayerSpear ;
+                 :alias "Old Dragonslayer" ;
+                 :title "Dragonslayer" ,
+                        "Knight" .
+
+
+###  http://www.darksouls.com/OldDragonslayerSoul
+:OldDragonslayerSoul rdf:type owl:NamedIndividual ,
+                              :Soul ;
+                     :mentions :OldDragonslayer ;
+                     :tradedFor :DragonslayerSpear ;
+                     :description """The Old Dragonslayer is reminiscent of a certain knight that appears in old legends.
+
+Use the special soul of the Old Dragonslayer to acquire numerous souls, or to create something of great worth.""" ;
+                     :name "Old Dragonslayer Soul" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :OldDragonslayerSoul ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """The Old Dragonslayer is reminiscent of a certain knight that appears in old legends.
+
+Use the special soul of the Old Dragonslayer to acquire numerous souls, or to create something of great worth.""" ;
+   rdfs:label "Dark Souls 2"
+ ] .
+
+
 ###  http://www.darksouls.com/Ornstein
-:Ornstein rdf:type owl:NamedIndividual ;
+:Ornstein rdf:type owl:NamedIndividual ,
+                   :Character ;
+          :equipment :LeoRing ;
+          :home :AnorLondo ;
           :memberOf :FourKnightsOfGwyn ;
+          :soul :OrnsteinSoul ;
           :weapon :DragonslayerSpear ;
           :alias "Dragon Slayer Ornstein" ,
                  "First Knight of the Sun's Firstborn" ,
@@ -348,8 +732,36 @@ Much of this resplendent tale of father and son, while epic, remains tragically 
                  "Knight" .
 
 
+###  http://www.darksouls.com/OrnsteinSoul
+:OrnsteinSoul rdf:type owl:NamedIndividual ,
+                       :Soul ;
+              :mentions :AnorLondo ,
+                        :FourKnightsOfGwyn ,
+                        :Gwyn ,
+                        :Ornstein ;
+              :description """Soul of Ornstein, Dragonslayer Knight who guards the cathedral in the forsaken city of Anor Londo.
+
+Special beings have special souls. Lord Gwyn granted this soul to his four most trusted knights.
+
+Use to acquire a large amount of souls, or to create a unique weapon.""" ;
+              :name "Soul of Ornstein" ;
+              :title "Special" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :OrnsteinSoul ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """Soul of Ornstein, Dragonslayer Knight who guards the cathedral in the forsaken city of Anor Londo.
+
+Special beings have special souls. Lord Gwyn granted this soul to his four most trusted knights.
+
+Use to acquire a large amount of souls, or to create a unique weapon.""" ;
+   rdfs:comment "DS1"
+ ] .
+
+
 ###  http://www.darksouls.com/RingFirstborn
-:RingFirstborn rdf:type owl:NamedIndividual ;
+:RingFirstborn rdf:type owl:NamedIndividual ,
+                        :Ring ;
                :belongsTo :Firstborn ;
                :mentions :Firstborn ,
                          :Gwyn ;
@@ -360,8 +772,22 @@ Boosts the strength of miracles.
 Lord Gwyn's firstborn was a god of war,
 but his foolishness led to a loss of the
 annals, and rescinding of his deific status.
-Today, even his name is not known. ~DS1""" ;
+Today, even his name is not known.""" ;
                :name "Ring of the Sun's Firstborn" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :RingFirstborn ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """Lord Gwyn's firstborn, who inherited the
+sunlight, once wore this ancient ring.
+Boosts the strength of miracles.
+
+Lord Gwyn's firstborn was a god of war,
+but his foolishness led to a loss of the
+annals, and rescinding of his deific status.
+Today, even his name is not known.""" ;
+   rdfs:comment "DS1"
+ ] .
 
 
 ###  http://www.darksouls.com/RingSunPrincess
@@ -369,6 +795,7 @@ Today, even his name is not known. ~DS1""" ;
                           :Ring ;
                  :belongsTo :Gwynevere ;
                  :mentions :AnorLondo ,
+                           :Flann ,
                            :Gwyn ,
                            :Gwynevere ;
                  :description """This ring is granted to those who enter a
@@ -378,32 +805,39 @@ warm ring boosts the synergy of miracles.
 
 The Princess of Sunlight Gwynevere left
 Anor Londo along many other deities,
-and later became wife to Flame God Flann. ~DS1""" ;
+and later became wife to Flame God Flann.""" ;
                  :name "Ring of the Sun Princess" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :RingSunPrincess ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """This ring is granted to those who enter a
+Covenant with Gwynevere, daughter of Lord Gywn
+and the Princess of Sunlight. This slightly
+warm ring boosts the synergy of miracles.
+
+The Princess of Sunlight Gwynevere left
+Anor Londo along many other deities,
+and later became wife to Flame God Flann.""" ;
+   rdfs:comment "DS1"
+ ] .
 
 
 ###  http://www.darksouls.com/Solaire
 :Solaire rdf:type owl:NamedIndividual ,
                   :Character ;
+         :appearsIn :AnorLondo ,
+                    :Izalith ,
+                    :UndeadBurg ;
+         :fights :Gwyn ,
+                 :Ornstein ;
+         :home :Astora ;
          :memberOf :WarriorsOfSunlight ;
-         :uses :SunlightSpear ;
+         :rewardsItem :SunlightMedal ;
+         :usesItem :SunlightSpear ;
          :alias "Solaire of Astora" ;
          :gender "Male" ;
          :name "Solaire" .
-
-
-###  http://www.darksouls.com/SoulOfGwyn
-:SoulOfGwyn rdf:type owl:NamedIndividual ,
-                     :Soul ;
-            :mentions :Gwyn ;
-            :description """Soul of Gwyn, the Lord of Sunlight
-and Cinder, who linked the First Flame.
-
-Lord Gwyn bequeathed most of his power to the
-Gods, and burned as cinder for the First
-Flame, but even so, Lord Gwyn's soul
-is a powerful thing indeed. ~DS1""" ;
-            :name "Soul of Gwyn, Lord of Cinder" .
 
 
 ###  http://www.darksouls.com/SunlightBlade
@@ -420,8 +854,24 @@ lightning, is very effective against dragons.
 
 When the eldest son was stripped of his
 deific status, he left this on his father's
-coffin, perhaps as a final farewell. ~DS1""" ;
+coffin, perhaps as a final farewell.""" ;
                :name "Sunlight Blade" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :SunlightBlade ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """Miracle wielded by Lord Gwyn's firstborn.
+
+Boost right weapon with rays of Sun.
+
+The power of sunlight, manifested as
+lightning, is very effective against dragons.
+
+When the eldest son was stripped of his
+deific status, he left this on his father's
+coffin, perhaps as a final farewell.""" ;
+   rdfs:comment "DS1"
+ ] .
 
 
 ###  http://www.darksouls.com/SunlightMedal
@@ -437,8 +887,23 @@ of Sunlight and complete a goal.
 The symbol represents Lord Gwyn's firstborn,
 who lost his deity status and was expunged
 from the annals. But the old God of War
-still watches closely over his warriors. ~DS1""" ;
+still watches closely over his warriors.""" ;
                :name "Sunlight Medal" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :SunlightMedal ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """This faintly warm medal engraved with the
+symbol of the Sun, is the ultimate honor,
+awarded to those who summon the Warrior
+of Sunlight and complete a goal.
+
+The symbol represents Lord Gwyn's firstborn,
+who lost his deity status and was expunged
+from the annals. But the old God of War
+still watches closely over his warriors.""" ;
+   rdfs:comment "DS1"
+ ] .
 
 
 ###  http://www.darksouls.com/SunlightSpear
@@ -448,26 +913,61 @@ still watches closely over his warriors. ~DS1""" ;
                :description """A miracle that launches a spear of sunlight.
 Powered with immense wondrous souls.
 
-One of the ancient original miracles,
-said to have existed from the infancy
-of the very world. ~DS2""" ,
+One of the ancient original miracles, said to have existed from the infancy of the very world.""" ,
                             """Miracle born from the fading soul of Gwyn.
 
 Hurl sunlight spear.
 
-In the war that marked the dawn of the Age of Fire,
-Gwyn wielded these rays of sunlight, which remains fierce even as they fade. ~DS1""" ,
+In the war that marked the dawn of the Age of Fire, Gwyn wielded these rays of sunlight, which remains fierce even as they fade.""" ,
                             """Miracle of Gwyn, the First Lord.
 Hurls a sunlight spear.
 
-The tales of Gwyn's Archdragon hunts describe the inception of the Age of Fire. ~DS3""" ;
+The tales of Gwyn's Archdragon hunts describe the inception of the Age of Fire.""" ;
                :name "Sunlight Spear" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :SunlightSpear ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """A miracle that launches a spear of sunlight.
+Powered with immense wondrous souls.
+
+One of the ancient original miracles, said to have existed from the infancy of the very world.""" ;
+   rdfs:comment "DS2"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :SunlightSpear ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """Miracle born from the fading soul of Gwyn.
+
+Hurl sunlight spear.
+
+In the war that marked the dawn of the Age of Fire, Gwyn wielded these rays of sunlight, which remains fierce even as they fade.""" ;
+   rdfs:comment "DS1"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :SunlightSpear ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """Miracle of Gwyn, the First Lord.
+Hurls a sunlight spear.
+
+The tales of Gwyn's Archdragon hunts describe the inception of the Age of Fire.""" ;
+   rdfs:comment "DS3"
+ ] .
 
 
 ###  http://www.darksouls.com/Swordspear
 :Swordspear rdf:type owl:NamedIndividual ,
-                     :Swordspear ;
+                     :Spear ;
             :name "Swordspear" .
+
+
+###  http://www.darksouls.com/UndeadBurg
+:UndeadBurg rdf:type owl:NamedIndividual ,
+                     :District ;
+            :location :Lordran ;
+            :name "Undead Burg" .
 
 
 ###  http://www.darksouls.com/WarriorOfSunlight
@@ -476,15 +976,37 @@ The tales of Gwyn's Archdragon hunts describe the inception of the Age of Fire. 
                    :mentions :WarriorsOfSunlight ;
                    :description """An ancient talisman depicting a holy symbol bestowed upon the Warriors of Sunlight. Equip to pledge oneself to the Warrior of Sunlight covenant.
 
-Warriors of Sunlight are brilliantly beaming co-operators who place their golden signatures to help those in need, for it is their duty to deliver a great conquest to their summoner. ~DS3""" ;
+Warriors of Sunlight are brilliantly beaming co-operators who place their golden signatures to help those in need, for it is their duty to deliver a great conquest to their summoner.""" ;
                    :name "Warrior of Sunlight" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :WarriorOfSunlight ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """An ancient talisman depicting a holy symbol bestowed upon the Warriors of Sunlight. Equip to pledge oneself to the Warrior of Sunlight covenant.
+
+Warriors of Sunlight are brilliantly beaming co-operators who place their golden signatures to help those in need, for it is their duty to deliver a great conquest to their summoner.""" ;
+   rdfs:comment "DS3"
+ ] .
 
 
 ###  http://www.darksouls.com/WarriorsOfSunlight
 :WarriorsOfSunlight rdf:type owl:NamedIndividual ,
                              :Covenant ;
                     :emblem :WarriorOfSunlight ;
+                    :rewardsItem :SunlightSpear ;
                     :name "Warriors of Sunlight" .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Miracle
+                :Pyromancy
+                :Sorcery
+              )
+] .
 
 
 ###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi

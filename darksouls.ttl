@@ -577,6 +577,8 @@
 ###  http://www.darksouls.com/AgeOfTheGods
 :AgeOfTheGods rdf:type owl:NamedIndividual ,
                        :Era ;
+              :alias "Age of Gods" ,
+                     "Dragonless Age" ;
               :name "Age of the Gods" .
 
 
@@ -608,6 +610,21 @@
            :game "DS1" ,
                  "DS3" ;
            :name "Anor Londo" .
+
+
+###  http://www.darksouls.com/AnorLondoCathedral
+:AnorLondoCathedral rdf:type owl:NamedIndividual ,
+                             :Building ;
+                    :location :AnorLondo ;
+                    :game "DS1" ,
+                          "DS3" .
+
+
+###  http://www.darksouls.com/ArchdragonPeak
+:ArchdragonPeak rdf:type owl:NamedIndividual ,
+                         :Place ;
+                :game "DS3" ;
+                :name "Archdragon Peak" .
 
 
 ###  http://www.darksouls.com/Astora
@@ -665,6 +682,29 @@ Fully restores HP and undo irregularities.
 
 The Goddess of Sunlight, Gwynevere, daughter of the great Lord of Sunlight Gwyn, is cherished by all as the symbol of bounty and fertility.""" ;
    rdfs:comment "DS1"
+ ] .
+
+
+###  http://www.darksouls.com/DragonslayerSet
+:DragonslayerSet rdf:type owl:NamedIndividual ,
+                          :Armor ;
+                 owl:sameAs :OrnsteinSet ;
+                 :location :ArchdragonPeak ;
+                 :mentions :AgeOfTheGods ,
+                           :NamelessKing ,
+                           :Ornstein ;
+                 :alias "Dragonslayer Set" ;
+                 :description """Golden lion armor associated with Dragonslayer Ornstein, from the age of gods, and imbued with the strength of lightning.
+
+In the dragonless age, this knight, who long guarded the ruined cathedral, left the land in search of the nameless king.""" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :DragonslayerSet ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """Golden lion armor associated with Dragonslayer Ornstein, from the age of gods, and imbued with the strength of lightning.
+
+In the dragonless age, this knight, who long guarded the ruined cathedral, left the land in search of the nameless king.""" ;
+   rdfs:comment "DS3"
  ] .
 
 
@@ -756,7 +796,8 @@ The mighty Lion Knights, worshippers of the war god Faraam, wore heavy armor and
 
 But their legacy was cut short with the fall of Forossa.""" ;
            :game "DS2" ,
-                 "DS3" .
+                 "DS3" ;
+           :name "Faraam Set" .
 
 [ rdf:type owl:Axiom ;
    owl:annotatedSource :FaraamSet ;
@@ -1048,7 +1089,7 @@ This ring strengthens counters with pierce weapons. His lugged spear is said to 
                           :NamelessKing ,
                           :Stormdrake ;
                 :transposedFrom :NamelessKingSoul ;
-                :description """Miracle of the Nameless King, ally to the ancient dragons. 
+                :description """Miracle of the Nameless King, ally to the ancient dragons.
 
 Calls forth furious bolts of lightning.
 
@@ -1075,6 +1116,7 @@ Once a slayer of dragons, the former king and wargod tamed a Stormdrake, on whic
 :NamelessKing rdf:type owl:NamedIndividual ,
                        :Boss ,
                        :God ;
+              :appearsIn :ArchdragonPeak ;
               :loyalTo :AncientDragons ;
               :soul :NamelessKingSoul ;
               :alias "God of War" ,
@@ -1177,8 +1219,32 @@ Use the special soul of the Old Dragonslayer to acquire numerous souls, or to cr
           :game "DS1" ;
           :gender "Male" ;
           :name "Ornstein" ;
-          :title "Dragonslayer" ,
+          :title "Captain" ,
+                 "Dragonslayer" ,
                  "Knight" .
+
+
+###  http://www.darksouls.com/OrnsteinSet
+:OrnsteinSet rdf:type owl:NamedIndividual ,
+                      :Armor ;
+             :armorOf :Ornstein ;
+             :mentions :AnorLondo ,
+                       :AnorLondoCathedral ,
+                       :FourKnightsOfGwyn ,
+                       :Ornstein ;
+             :description """Armor of the dragonslayer Ornstein, who guards the cathedral in the forsaken city of Anor Londo.
+
+Ornstein is believed to be the captain of the Four Knights. His golden lion Armor is imbued with the power of lightning and should provide good protection against it.""" ;
+             :name "Ornstein's Set" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :OrnsteinSet ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """Armor of the dragonslayer Ornstein, who guards the cathedral in the forsaken city of Anor Londo.
+
+Ornstein is believed to be the captain of the Four Knights. His golden lion Armor is imbued with the power of lightning and should provide good protection against it.""" ;
+   rdfs:comment "DS1"
+ ] .
 
 
 ###  http://www.darksouls.com/OrnsteinSoul
@@ -1327,6 +1393,7 @@ Imbue blade with the wrath of storm in a spinning motion, and follow with a stri
 ###  http://www.darksouls.com/Stormdrake
 :Stormdrake rdf:type owl:NamedIndividual ,
                      :Character ;
+            :appearsIn :ArchdragonPeak ;
             :loyalTo :NamelessKing ;
             :game "DS3" .
 

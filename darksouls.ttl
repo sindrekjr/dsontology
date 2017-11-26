@@ -61,7 +61,8 @@
 ###  http://www.darksouls.com/dialogue
 :dialogue rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf :mentions ;
-          rdf:type owl:FunctionalProperty ,
+          owl:inverseOf :speaker ;
+          rdf:type owl:InverseFunctionalProperty ,
                    owl:AsymmetricProperty ,
                    owl:IrreflexiveProperty ;
           rdfs:range :Dialogue .

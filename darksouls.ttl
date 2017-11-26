@@ -13,8 +13,9 @@
 #################################################################
 
 ###  http://www.darksouls.com/adjacentTo
-:adjacentTo rdf:type owl:ObjectProperty ,
-                     owl:SymmetricProperty ,
+:adjacentTo rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty ;
+            rdf:type owl:SymmetricProperty ,
                      owl:IrreflexiveProperty ;
             rdfs:domain :Place ;
             rdfs:range :Place .
@@ -27,6 +28,7 @@
 
 ###  http://www.darksouls.com/belongsTo
 :belongsTo rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf owl:topObjectProperty ;
            owl:inverseOf :ownerOf ;
            rdf:type owl:IrreflexiveProperty ;
            rdfs:domain :Item ;
@@ -50,7 +52,8 @@
 
 
 ###  http://www.darksouls.com/commonality
-:commonality rdf:type owl:ObjectProperty .
+:commonality rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty .
 
 
 ###  http://www.darksouls.com/craftedFrom
@@ -65,8 +68,9 @@
 
 
 ###  http://www.darksouls.com/emblem
-:emblem rdf:type owl:ObjectProperty ,
-                 owl:FunctionalProperty ,
+:emblem rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf owl:topObjectProperty ;
+        rdf:type owl:FunctionalProperty ,
                  owl:InverseFunctionalProperty ,
                  owl:AsymmetricProperty ,
                  owl:IrreflexiveProperty ;
@@ -85,8 +89,9 @@
 
 
 ###  http://www.darksouls.com/family
-:family rdf:type owl:ObjectProperty ,
-                 owl:SymmetricProperty ,
+:family rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf owl:topObjectProperty ;
+        rdf:type owl:SymmetricProperty ,
                  owl:TransitiveProperty ;
         rdfs:domain :Character ;
         rdfs:range :Character .
@@ -104,8 +109,9 @@
 
 
 ###  http://www.darksouls.com/hasItem
-:hasItem rdf:type owl:ObjectProperty ,
-                  owl:IrreflexiveProperty ;
+:hasItem rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf owl:topObjectProperty ;
+         rdf:type owl:IrreflexiveProperty ;
          rdfs:domain :Actor ;
          rdfs:range :Item .
 
@@ -133,6 +139,7 @@
 
 ###  http://www.darksouls.com/knowsOf
 :knowsOf rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf owl:topObjectProperty ;
          rdfs:domain :Actor ;
          rdfs:range :Actor .
 
@@ -150,8 +157,9 @@
 
 
 ###  http://www.darksouls.com/location
-:location rdf:type owl:ObjectProperty ,
-                   owl:TransitiveProperty ;
+:location rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdf:type owl:TransitiveProperty ;
           rdfs:range :Place .
 
 
@@ -170,16 +178,19 @@
 
 ###  http://www.darksouls.com/mentionedBy
 :mentionedBy rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
              owl:inverseOf :mentions .
 
 
 ###  http://www.darksouls.com/mentions
-:mentions rdf:type owl:ObjectProperty .
+:mentions rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty .
 
 
 ###  http://www.darksouls.com/obtainedFrom
-:obtainedFrom rdf:type owl:ObjectProperty ,
-                       owl:IrreflexiveProperty .
+:obtainedFrom rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              rdf:type owl:IrreflexiveProperty .
 
 
 ###  http://www.darksouls.com/ownerOf
@@ -244,13 +255,15 @@
 
 
 ###  http://www.darksouls.com/tradedFor
-:tradedFor rdf:type owl:ObjectProperty ,
-                    owl:SymmetricProperty .
+:tradedFor rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :obtainedFrom ;
+           rdf:type owl:SymmetricProperty .
 
 
 ###  http://www.darksouls.com/transposedFrom
 :transposedFrom rdf:type owl:ObjectProperty ;
-                rdfs:subPropertyOf :obtainedFrom .
+                rdfs:subPropertyOf :obtainedFrom ;
+                rdf:type owl:FunctionalProperty .
 
 
 ###  http://www.darksouls.com/usedBy
@@ -275,24 +288,29 @@
 #################################################################
 
 ###  http://www.darksouls.com/alias
-:alias rdf:type owl:DatatypeProperty .
+:alias rdf:type owl:DatatypeProperty ;
+       rdfs:subPropertyOf owl:topDataProperty .
 
 
 ###  http://www.darksouls.com/description
-:description rdf:type owl:DatatypeProperty .
+:description rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty .
 
 
 ###  http://www.darksouls.com/dialogue
-:dialogue rdf:type owl:DatatypeProperty .
+:dialogue rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty .
 
 
 ###  http://www.darksouls.com/domain
 :domain rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf owl:topDataProperty ;
         rdfs:domain :God .
 
 
 ###  http://www.darksouls.com/game
 :game rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf owl:topDataProperty ;
       rdfs:range [ rdf:type rdfs:Datatype ;
                    owl:oneOf [ rdf:type rdf:List ;
                                rdf:first "DS1" ;
@@ -308,8 +326,9 @@
 
 
 ###  http://www.darksouls.com/gender
-:gender rdf:type owl:DatatypeProperty ,
-                 owl:FunctionalProperty ;
+:gender rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf owl:topDataProperty ;
+        rdf:type owl:FunctionalProperty ;
         rdfs:domain :Character ;
         rdfs:range [ rdf:type rdfs:Datatype ;
                      owl:oneOf [ rdf:type rdf:List ;

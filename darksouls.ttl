@@ -29,8 +29,7 @@
 ###  http://www.darksouls.com/appearsIn
 :appearsIn rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf :hasVisited ;
-           rdf:type owl:AsymmetricProperty ,
-                    owl:IrreflexiveProperty .
+           rdf:type owl:IrreflexiveProperty .
 
 
 ###  http://www.darksouls.com/armor
@@ -75,6 +74,21 @@
 :craftedFrom rdf:type owl:ObjectProperty ;
              rdfs:subPropertyOf :providedBy ;
              rdfs:range :Soul .
+
+
+###  http://www.darksouls.com/defeatedBy
+:defeatedBy rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :fights ;
+            owl:inverseOf :defeats ;
+            rdf:type owl:AsymmetricProperty ,
+                     owl:IrreflexiveProperty .
+
+
+###  http://www.darksouls.com/defeats
+:defeats rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :fights ;
+         rdf:type owl:AsymmetricProperty ,
+                  owl:IrreflexiveProperty .
 
 
 ###  http://www.darksouls.com/dropsItem
@@ -676,6 +690,25 @@
 #    Individuals
 #################################################################
 
+###  http://www.darksouls.com/Abyss
+:Abyss rdf:type owl:NamedIndividual ,
+                :Place ;
+       :name "Abyss" .
+
+
+###  http://www.darksouls.com/AbyssGreatsword
+:AbyssGreatsword rdf:type owl:NamedIndividual ,
+                          :Greatsword ;
+                 :mentions :Abyss ,
+                           :Artorias ,
+                           :Gwyn ;
+                 :description """This greatsword belonged to Lord Gwyn's Knight Artorias, who fell to the abyss.
+
+Swallowed by the Dark with its master, this sword is tainted by the abyss, and now its strength reflects its wielder's humanity.""" ;
+                 :game "DS1" ;
+                 :name "Abyss Greatsword" .
+
+
 ###  http://www.darksouls.com/AgeOfTheGods
 :AgeOfTheGods rdf:type owl:NamedIndividual ,
                        :Era ;
@@ -754,6 +787,43 @@ When Aldrich ruminated on the fading of the fire, it inspired visions of a comin
                 :name "Archdragon Peak" .
 
 
+###  http://www.darksouls.com/Artorias
+:Artorias rdf:type owl:NamedIndividual ,
+                   :Boss ;
+          :appearsIn :Oolacile ;
+          :defeatedBy :Manus ;
+          :equipment :WolfRing ;
+          :home :Lordran ;
+          :memberOf :FourKnightsOfGwyn ;
+          :soul :ArtoriasSoul ;
+          :weapon :AbyssGreatsword ;
+          :alias "Abysswalker" ,
+                 "Abysswalker Knight" ,
+                 "Artorias the Abysswalker" ,
+                 "Wolf Knight" ;
+          :game "DS1" ;
+          :gender "Male" ;
+          :name "Artorias" ;
+          :title "Knight" .
+
+
+###  http://www.darksouls.com/ArtoriasSoul
+:ArtoriasSoul rdf:type owl:NamedIndividual ,
+                       :Soul ;
+              :craftInto :AbyssGreatsword ;
+              :mentions :Abyss ,
+                        :Artorias ,
+                        :Gwyn ;
+              :description """Soul of Lord Gwyn's Knight Artorias, who was consumed by the Abyss.
+
+The legend that Artorias repelled the Abyss only told half the story.
+
+It seems that he was defeated, and his honor preserved, by some unsung hero, who is the true victor of the Abyss.""" ;
+              :game "DS1" ;
+              :name "Soul of Artorias" ;
+              :title "Dark" .
+
+
 ###  http://www.darksouls.com/Astora
 :Astora rdf:type owl:NamedIndividual ,
                  :Kingdom ;
@@ -789,6 +859,18 @@ When a member of the Way of Blue faces a dark spirit, the Blades of the Darkmoon
                         :Covenant ;
                :hq :CathedralOfBlue ;
                :name "Blue Sentinels" .
+
+
+###  http://www.darksouls.com/BrokenPendant
+:BrokenPendant rdf:type owl:NamedIndividual ,
+                        :Item ;
+               :location :DukeArchives ;
+               :mentions :Oolacile ;
+               :description """Half of a broken stone pendant. The vine appears to originate from Oolacile.
+
+A powerful magic can be sensed from this ancient stone. Yet men of this time can neither manipulate nor sense its power, which has a distinct air consisting of both reverence and nostalgia.""" ;
+               :game "DS1" ;
+               :name "Broken Pendant" .
 
 
 ###  http://www.darksouls.com/CathedralOfBlue
@@ -977,6 +1059,14 @@ Hold swordspear high in the air to summon fierce lightning that descends upon di
                     :Kingdom ;
            :game "DS2" ;
            :name "Drangleic" .
+
+
+###  http://www.darksouls.com/DukeArchives
+:DukeArchives rdf:type owl:NamedIndividual ,
+                       :Building ;
+              :adjacentTo :AnorLondo ;
+              :game "DS1" ;
+              :name "The Duke's Archives" .
 
 
 ###  http://www.darksouls.com/Faraam
@@ -1265,6 +1355,7 @@ Use the soul of Gwyn's lastborn to acquire a huge amount of souls, or to create 
                   "Sun Princess" ;
            :domain "Bounty" ,
                    "Fertility" ,
+                   "Sun" ,
                    "Sunlight" ;
            :game "DS1" ;
            :gender "Female" ;
@@ -1350,6 +1441,34 @@ Once a slayer of dragons, the former king and wargod tamed a Stormdrake, on whic
                   :Kingdom ;
          :game "DS3" ;
          :name "Lothric" .
+
+
+###  http://www.darksouls.com/Manus
+:Manus rdf:type owl:NamedIndividual ,
+                :Boss ;
+       :appearsIn :Abyss ;
+       :home :Abyss ;
+       :soul :ManusSoul ;
+       :alias "Abyss" ,
+              "Ancient Manus" ,
+              "Father of the Abyss" ;
+       :game "DS1" ;
+       :gender "Male" ;
+       :name "Manus" .
+
+
+###  http://www.darksouls.com/ManusSoul
+:ManusSoul rdf:type owl:NamedIndividual ,
+                    :Soul ;
+           :mentions :Abyss ,
+                     :BrokenPendant ,
+                     :Manus ;
+           :tradeFor :Pursuers ;
+           :description """Soul of Manus, Father of the Abyss. This extraordinary soul is a viscous, lukewarm lump of gentle humanity.
+
+Ancient Manus was clearly once human. But he became the Father of the Abyss after his humanity went wild, eternally seeking his precious broken pendant.""" ;
+           :name "Soul of Manus" ;
+           :title "Dark" .
 
 
 ###  http://www.darksouls.com/MoonlightRobe
@@ -1458,9 +1577,18 @@ Use the special soul of the Old Dragonslayer to acquire numerous souls, or to cr
  ] .
 
 
+###  http://www.darksouls.com/Oolacile
+:Oolacile rdf:type owl:NamedIndividual ,
+                   :Kingdom ;
+          :adjacentTo :Abyss ;
+          :game "DS1" ;
+          :name "Oolacile" .
+
+
 ###  http://www.darksouls.com/Ornstein
 :Ornstein rdf:type owl:NamedIndividual ,
                    :Boss ;
+          :dropsItem :LeoRing ;
           :equipment :LeoRing ;
           :home :AnorLondo ;
           :memberOf :FourKnightsOfGwyn ;
@@ -1537,15 +1665,27 @@ Use to acquire a large amount of souls, or to create a unique weapon.""" ;
                :name "Princess's Guard" .
 
 
+###  http://www.darksouls.com/Pursuers
+:Pursuers rdf:type owl:NamedIndividual ,
+                   :Sorcery ;
+          :mentions :Abyss ,
+                    :Manus ;
+          :description """Sorcery of Manus, Father of the Abyss.
+Grant a fleeting will to the Dark of humanity, and volley the result.
+
+The will feels envy, or perhaps love, and despite the inevitably trite and tragic ending, the will sees no alternative, and is driven madly toward its target.""" ;
+          :game "DS1" .
+
+
 ###  http://www.darksouls.com/QueenOfLothric
 :QueenOfLothric rdf:type owl:NamedIndividual ,
                          :God ;
                 :spouse :Oceiros ;
+                :alias "Goddess of Fertility and Bounty" ;
                 :domain "Bounty" ,
                         "Fertility" ;
                 :game "DS3" ;
                 :gender "Female" ;
-                :name "Goddess of Fertility and Bounty" ;
                 :title "God" ,
                        "Queen" ,
                        "Queen of Lothric" .
@@ -1979,6 +2119,39 @@ Warriors of Sunlight are brilliantly beaming co-operators who place their golden
 :WayOfBlue rdf:type owl:NamedIndividual ,
                     :Covenant ;
            :name "Way of Blue" .
+
+
+###  http://www.darksouls.com/WolfRing
+:WolfRing rdf:type owl:NamedIndividual ,
+                   :Ring ;
+          :mentions :Artorias ,
+                    :FourKnightsOfGwyn ,
+                    :Gwyn ;
+          :description "One of the special rings granted to the four knights of Gwyn. The wolf ring belongs to Artorias the Abysswalker. Artorias had an unbendable will of steel, and was unmatched with a greatsword." ,
+                       """Ring associated with Abysswalker Artorias, one of the Four Knights of Gwyn, the First Lord.
+
+Increases poise.
+
+Artorias had an unbendable will of steel, and was unmatched with a greatsword.""" ;
+          :name "Wolf Ring" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :WolfRing ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget "One of the special rings granted to the four knights of Gwyn. The wolf ring belongs to Artorias the Abysswalker. Artorias had an unbendable will of steel, and was unmatched with a greatsword." ;
+   rdfs:comment "DS1"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :WolfRing ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """Ring associated with Abysswalker Artorias, one of the Four Knights of Gwyn, the First Lord.
+
+Increases poise.
+
+Artorias had an unbendable will of steel, and was unmatched with a greatsword.""" ;
+   rdfs:comment "DS3"
+ ] .
 
 
 #################################################################

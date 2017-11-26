@@ -156,6 +156,15 @@
                owl:IrreflexiveProperty .
 
 
+###  http://www.darksouls.com/hq
+:hq rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :location ;
+    rdf:type owl:AsymmetricProperty ,
+             owl:IrreflexiveProperty ;
+    rdfs:domain :Faction ;
+    rdfs:range :Place .
+
+
 ###  http://www.darksouls.com/knowsOf
 :knowsOf rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf owl:topObjectProperty ;
@@ -412,16 +421,36 @@
                       ] .
 
 
+###  http://www.darksouls.com/Bow
+:Bow rdf:type owl:Class ;
+     rdfs:subClassOf :Weapon .
+
+
 ###  http://www.darksouls.com/Building
 :Building rdf:type owl:Class ;
           rdfs:subClassOf :Structure ;
           owl:disjointWith :Monument .
 
 
+###  http://www.darksouls.com/Catalyst
+:Catalyst rdf:type owl:Class ;
+          rdfs:subClassOf :SpellTool .
+
+
 ###  http://www.darksouls.com/Character
 :Character rdf:type owl:Class ;
            rdfs:subClassOf :Actor ;
            owl:disjointWith :Faction .
+
+
+###  http://www.darksouls.com/Chest
+:Chest rdf:type owl:Class ;
+       rdfs:subClassOf :Armor .
+
+
+###  http://www.darksouls.com/Chime
+:Chime rdf:type owl:Class ;
+       rdfs:subClassOf :SpellTool .
 
 
 ###  http://www.darksouls.com/City
@@ -483,6 +512,16 @@
             rdfs:subClassOf :Weapon .
 
 
+###  http://www.darksouls.com/Hands
+:Hands rdf:type owl:Class ;
+       rdfs:subClassOf :Armor .
+
+
+###  http://www.darksouls.com/Head
+:Head rdf:type owl:Class ;
+      rdfs:subClassOf :Armor .
+
+
 ###  http://www.darksouls.com/Item
 :Item rdf:type owl:Class ;
       rdfs:subClassOf :Thing ,
@@ -495,6 +534,11 @@
 ###  http://www.darksouls.com/Kingdom
 :Kingdom rdf:type owl:Class ;
          rdfs:subClassOf :Area .
+
+
+###  http://www.darksouls.com/Legs
+:Legs rdf:type owl:Class ;
+      rdfs:subClassOf :Armor .
 
 
 ###  http://www.darksouls.com/Miracle
@@ -522,6 +566,11 @@
            rdfs:subClassOf :Spell .
 
 
+###  http://www.darksouls.com/PyromancyFlame
+:PyromancyFlame rdf:type owl:Class ;
+                rdfs:subClassOf :SpellTool .
+
+
 ###  http://www.darksouls.com/Ring
 :Ring rdf:type owl:Class ;
       rdfs:subClassOf :Equipment .
@@ -547,6 +596,16 @@
        rdfs:subClassOf :Item .
 
 
+###  http://www.darksouls.com/SpellTool
+:SpellTool rdf:type owl:Class ;
+           rdfs:subClassOf :Equipment .
+
+
+###  http://www.darksouls.com/Staff
+:Staff rdf:type owl:Class ;
+       rdfs:subClassOf :SpellTool .
+
+
 ###  http://www.darksouls.com/Structure
 :Structure rdf:type owl:Class ;
            rdfs:subClassOf :Place .
@@ -554,7 +613,7 @@
 
 ###  http://www.darksouls.com/Talisman
 :Talisman rdf:type owl:Class ;
-          rdfs:subClassOf :Item .
+          rdfs:subClassOf :SpellTool .
 
 
 ###  http://www.darksouls.com/Thing
@@ -580,6 +639,31 @@
               :alias "Age of Gods" ,
                      "Dragonless Age" ;
               :name "Age of the Gods" .
+
+
+###  http://www.darksouls.com/Aldrich
+:Aldrich rdf:type owl:NamedIndividual ,
+                  :Boss ;
+         :appearsIn :AnorLondoCathedral ;
+         :soul :AldrichSoul ;
+         :alias "Devourer of Gods" ;
+         :game "DS3" ;
+         :gender "Male" ;
+         :name "Aldrich" .
+
+
+###  http://www.darksouls.com/AldrichSoul
+:AldrichSoul rdf:type owl:NamedIndividual ,
+                      :Soul ;
+             :mentions :Aldrich ;
+             :description """Soul of Aldrich.
+One of the twisted souls, steeped in strength.
+
+Use to acquire many souls, or transpose to extract its true strength.
+
+When Aldrich ruminated on the fading of the fire, it inspired visions of a coming age of the deep sea. He knew the path would be arduous, but he had no fear. He would devour the gods himself.""" ;
+             :name "Soul of Aldrich" ;
+             :title "Twisted" .
 
 
 ###  http://www.darksouls.com/AltarOfSunlight
@@ -633,6 +717,37 @@
         :name "Kingdom" .
 
 
+###  http://www.darksouls.com/BladeOfTheDarkmoon
+:BladeOfTheDarkmoon rdf:type owl:NamedIndividual ,
+                             :Emblem ;
+                    :mentions :BladesOfTheDarkmoon ,
+                              :BlueSentinels ,
+                              :WayOfBlue ;
+                    :description """A silver pendant depicting the Darkmoon and a sword, the crest of the Darkmoon Knights, the original Blue Sentinels. Equip to pledge oneself to the Blade of the Darkmoon covenant.
+
+When a member of the Way of Blue faces a dark spirit, the Blades of the Darkmoon, by an ancient accord, help to root out the invader. Summoning takes place automatically when equipped.""" ;
+                    :game "DS3" ;
+                    :name "Blade of the Darkmoon" .
+
+
+###  http://www.darksouls.com/BladesOfTheDarkmoon
+:BladesOfTheDarkmoon rdf:type owl:NamedIndividual ,
+                              :Covenant ;
+                     :emblem :BladeOfTheDarkmoon ;
+                     :hq :DarkmoonTomb ;
+                     :leader :Gwyndolin ;
+                     :game "DS1" ,
+                           "DS3" ;
+                     :name "Blades of the Darkmoon" .
+
+
+###  http://www.darksouls.com/BlueSentinels
+:BlueSentinels rdf:type owl:NamedIndividual ,
+                        :Covenant ;
+               :hq :CathedralOfBlue ;
+               :name "Blue Sentinels" .
+
+
 ###  http://www.darksouls.com/CathedralOfBlue
 :CathedralOfBlue rdf:type owl:NamedIndividual ,
                           :Building ;
@@ -640,6 +755,57 @@
                  :location :Drangleic ;
                  :game "DS2" ;
                  :name "Cathedral of Blue" .
+
+
+###  http://www.darksouls.com/CrownOfTheDarkSun
+:CrownOfTheDarkSun rdf:type owl:NamedIndividual ,
+                            :Head ;
+                   :armorOf :Gwyndolin ;
+                   :mentions :AnorLondo ,
+                             :Gwyndolin ;
+                   :description """Crown of the Dark Sun Gwyndolin, protector of the forsaken city of Anor Londo.
+
+This crown of the gods demands faith immeasurable of its wearer, but it is imbued with Darkmoon power that enhances all magic. The image of the sun manifests Gwyndolin's deep adoration of the sun.""" ;
+                   :game "DS1" ;
+                   :name "Crown of the Dark Sun" .
+
+
+###  http://www.darksouls.com/DarkmoonBow
+:DarkmoonBow rdf:type owl:NamedIndividual ,
+                      :Bow ;
+             :craftedFrom :GwyndolinSoul ;
+             :mentions :AnorLondo ,
+                       :Gwyndolin ;
+             :description """Bow born from the soul of the Dark Sun Gwyndolin, Darkmoon deity who watches over the abandoned city of Gods, Anor Londo.
+
+This golden bow is imbued with powerful magic and is most impressive with Moonlight Arrows.""" ;
+             :game "DS1" ;
+             :name "Darkmoon Bow" .
+
+
+###  http://www.darksouls.com/DarkmoonLongbow
+:DarkmoonLongbow rdf:type owl:NamedIndividual ,
+                          :Bow ;
+                 :mentions :Aldrich ,
+                           :Gwyndolin ;
+                 :transposedFrom :AldrichSoul ;
+                 :description """Longbow of Darkmoon Gwyndolin, who was gradually devoured by Aldrich.
+
+This golden bow is imbued with powerful magic and is most impressive with Moonlight Arrows.
+
+Skill: Darkmoon Arrow
+Infuse a readied arrow with Darkmoon essence, granting it magic damage and the ability to pierce shields.""" ;
+                 :game "DS3" ;
+                 :name "Darkmoon Longbow" .
+
+
+###  http://www.darksouls.com/DarkmoonTomb
+:DarkmoonTomb rdf:type owl:NamedIndividual ,
+                       :Building ;
+              :location :AnorLondo ;
+              :game "DS1" ,
+                    "DS3" ;
+              :name "Darkmoon Tomb" .
 
 
 ###  http://www.darksouls.com/DivineBlessing
@@ -1012,15 +1178,36 @@ is a powerful thing indeed.""" ;
 :Gwyndolin rdf:type owl:NamedIndividual ,
                     :Boss ,
                     :God ;
-           :appearsIn :AnorLondo ;
+           :appearsIn :DarkmoonTomb ;
            :home :AnorLondo ;
+           :soul :GwyndolinSoul ;
            :alias "Dark Sun" ,
-                  "Darkmoon" ;
+                  "Dark Sun Gwyndolin" ,
+                  "Darkmoon" ,
+                  "God of the Dark Sun" ;
+           :domain "Dark Sun" ,
+                   "Illusion" ,
+                   "Moon" ;
            :game "DS1" ;
            :gender "Male" ;
            :name "Gwyndolin" ;
            :title "God" ,
                   "Lord" .
+
+
+###  http://www.darksouls.com/GwyndolinSoul
+:GwyndolinSoul rdf:type owl:NamedIndividual ,
+                        :Soul ;
+               :mentions :AnorLondo ,
+                         :Gwyn ,
+                         :Gwyndolin ;
+               :description """Soul of Darkmoon Gwyndolin, god of the Dark Sun and guardian of deserted Anor Londo.
+
+Special beings have special souls.
+Use the soul of Gwyn's lastborn to acquire a huge amount of souls, or to create a unique weapon.""" ;
+               :game "DS1" ;
+               :name "Soul of Gwyndolin" ;
+               :title "Special" .
 
 
 ###  http://www.darksouls.com/Gwynevere
@@ -1110,6 +1297,19 @@ Once a slayer of dragons, the former king and wargod tamed a Stormdrake, on whic
                   :Kingdom ;
          :game "DS3" ;
          :name "Lothric" .
+
+
+###  http://www.darksouls.com/MoonlightRobe
+:MoonlightRobe rdf:type owl:NamedIndividual ,
+                        :Chest ;
+               :armorOf :Gwyndolin ;
+               :mentions :AnorLondo ,
+                         :Gwyndolin ;
+               :description """Robe of the Dark Sun Gwyndolin, protector of the forsaken city of Anor Londo.
+
+The power of the moon was strong in Gwyndolin, and thus he was raised as a daughter. His magic garb is silk-thin, and hardly provides any physical defense.""" ;
+               :game "DS1" ;
+               :name "Moonlight Robe" .
 
 
 ###  http://www.darksouls.com/NamelessKing
@@ -1581,6 +1781,18 @@ The tales of Gwyn's Archdragon hunts describe the inception of the Age of Fire."
             :name "Swordspear" .
 
 
+###  http://www.darksouls.com/TinDarkmoonCatalyst
+:TinDarkmoonCatalyst rdf:type owl:NamedIndividual ,
+                              :Catalyst ;
+                     :craftedFrom :GwyndolinSoul ;
+                     :mentions :AnorLondo ,
+                               :Gwyn ,
+                               :Gwyndolin ;
+                     :description "Catalyst born from the soul of the Dark Sun Gwyndolin, Darkmoon deity who watches over the abandoned city of Gods, Anor Londo. Gwyndolin is Gwyn's lastborn and a legitimate god, but he is also a Moon sorcerer, and this wand is boosted by faith, not intelligence." ;
+                     :game "DS1" ;
+                     :name "Tin Darkmoon Catalyst" .
+
+
 ###  http://www.darksouls.com/UndeadBurg
 :UndeadBurg rdf:type owl:NamedIndividual ,
                      :District ;
@@ -1628,14 +1840,48 @@ Warriors of Sunlight are brilliantly beaming co-operators who place their golden
                     :name "Warriors of Sunlight" .
 
 
+###  http://www.darksouls.com/WayOfBlue
+:WayOfBlue rdf:type owl:NamedIndividual ,
+                    :Covenant ;
+           :name "Way of Blue" .
+
+
 #################################################################
 #    General axioms
 #################################################################
 
 [ rdf:type owl:AllDisjointClasses ;
   owl:members ( :Actor
+                :Era
                 :Item
                 :Place
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Armor
+                :Ring
+                :SpellTool
+                :Weapon
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Chest
+                :Hands
+                :Head
+                :Legs
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Consumable
+                :Emblem
+                :Equipment
+                :Spell
               )
 ] .
 

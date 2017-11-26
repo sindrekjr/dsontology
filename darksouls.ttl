@@ -21,6 +21,12 @@
             rdfs:range :Place .
 
 
+###  http://www.darksouls.com/altar
+:altar rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :hasSymbol ;
+       rdfs:range :Monument .
+
+
 ###  http://www.darksouls.com/appearsIn
 :appearsIn rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf :hasVisited .
@@ -39,7 +45,8 @@
 :child rdf:type owl:ObjectProperty ;
        rdfs:subPropertyOf :family ;
        owl:inverseOf :parent ;
-       rdf:type owl:AsymmetricProperty ;
+       rdf:type owl:AsymmetricProperty ,
+                owl:IrreflexiveProperty ;
        owl:propertyDisjointWith :parent .
 
 
@@ -69,11 +76,9 @@
 
 ###  http://www.darksouls.com/emblem
 :emblem rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf owl:topObjectProperty ;
+        rdfs:subPropertyOf :hasSymbol ;
         rdf:type owl:FunctionalProperty ,
-                 owl:InverseFunctionalProperty ,
-                 owl:AsymmetricProperty ,
-                 owl:IrreflexiveProperty ;
+                 owl:InverseFunctionalProperty ;
         rdfs:range :Emblem .
 
 
@@ -122,6 +127,15 @@
            owl:inverseOf :memberOf ;
            rdfs:domain :Organization ;
            rdfs:range :Character .
+
+
+###  http://www.darksouls.com/hasSymbol
+:hasSymbol rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf owl:topObjectProperty ;
+           owl:inverseOf :symbolOf ;
+           rdf:type owl:AsymmetricProperty ,
+                    owl:IrreflexiveProperty ;
+           rdfs:domain :Actor .
 
 
 ###  http://www.darksouls.com/hasVisited
@@ -202,7 +216,8 @@
 ###  http://www.darksouls.com/parent
 :parent rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf :family ;
-        rdf:type owl:AsymmetricProperty .
+        rdf:type owl:AsymmetricProperty ,
+                 owl:IrreflexiveProperty .
 
 
 ###  http://www.darksouls.com/rewardedBy
@@ -251,7 +266,14 @@
 ###  http://www.darksouls.com/spouse
 :spouse rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf :family ;
-        rdf:type owl:SymmetricProperty .
+        rdf:type owl:SymmetricProperty ,
+                 owl:IrreflexiveProperty .
+
+
+###  http://www.darksouls.com/symbolOf
+:symbolOf rdf:type owl:ObjectProperty ,
+                   owl:AsymmetricProperty ,
+                   owl:IrreflexiveProperty .
 
 
 ###  http://www.darksouls.com/tradedFor
@@ -365,6 +387,11 @@
                        ] .
 
 
+###  http://www.darksouls.com/Area
+:Area rdf:type owl:Class ;
+      rdfs:subClassOf :Place .
+
+
 ###  http://www.darksouls.com/Boss
 :Boss rdf:type owl:Class ;
       rdfs:subClassOf :Character ,
@@ -376,7 +403,8 @@
 
 ###  http://www.darksouls.com/Building
 :Building rdf:type owl:Class ;
-          rdfs:subClassOf :Place .
+          rdfs:subClassOf :Structure ;
+          owl:disjointWith :Monument .
 
 
 ###  http://www.darksouls.com/Character
@@ -387,7 +415,7 @@
 
 ###  http://www.darksouls.com/City
 :City rdf:type owl:Class ;
-      rdfs:subClassOf :Place .
+      rdfs:subClassOf :Area .
 
 
 ###  http://www.darksouls.com/Consumable
@@ -402,7 +430,7 @@
 
 ###  http://www.darksouls.com/District
 :District rdf:type owl:Class ;
-          rdfs:subClassOf :Place .
+          rdfs:subClassOf :Area .
 
 
 ###  http://www.darksouls.com/Emblem
@@ -444,12 +472,17 @@
 
 ###  http://www.darksouls.com/Kingdom
 :Kingdom rdf:type owl:Class ;
-         rdfs:subClassOf :Place .
+         rdfs:subClassOf :Area .
 
 
 ###  http://www.darksouls.com/Miracle
 :Miracle rdf:type owl:Class ;
          rdfs:subClassOf :Spell .
+
+
+###  http://www.darksouls.com/Monument
+:Monument rdf:type owl:Class ;
+          rdfs:subClassOf :Structure .
 
 
 ###  http://www.darksouls.com/Order
@@ -497,6 +530,11 @@
        rdfs:subClassOf :Item .
 
 
+###  http://www.darksouls.com/Structure
+:Structure rdf:type owl:Class ;
+           rdfs:subClassOf :Place .
+
+
 ###  http://www.darksouls.com/Talisman
 :Talisman rdf:type owl:Class ;
           rdfs:subClassOf :Item .
@@ -518,6 +556,21 @@
 #################################################################
 #    Individuals
 #################################################################
+
+###  http://www.darksouls.com/AltarOfSunlight
+:AltarOfSunlight rdf:type owl:NamedIndividual ,
+                          :Monument ;
+                 :location :UndeadParish ;
+                 :game "DS1" ;
+                 :name "Altar of Sunlight" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :AltarOfSunlight ;
+   owl:annotatedProperty :location ;
+   owl:annotatedTarget :UndeadParish ;
+   rdfs:comment "DS1"
+ ] .
+
 
 ###  http://www.darksouls.com/AnorLondo
 :AnorLondo rdf:type owl:NamedIndividual ,
@@ -1293,6 +1346,14 @@ The tales of Gwyn's Archdragon hunts describe the inception of the Age of Fire."
             :name "Undead Burg" .
 
 
+###  http://www.darksouls.com/UndeadParish
+:UndeadParish rdf:type owl:NamedIndividual ,
+                       :District ;
+              :adjacentTo :UndeadBurg ;
+              :game "DS1" ;
+              :name "Undead Parish" .
+
+
 ###  http://www.darksouls.com/WarriorOfSunlight
 :WarriorOfSunlight rdf:type owl:NamedIndividual ,
                             :Emblem ;
@@ -1316,10 +1377,10 @@ Warriors of Sunlight are brilliantly beaming co-operators who place their golden
 ###  http://www.darksouls.com/WarriorsOfSunlight
 :WarriorsOfSunlight rdf:type owl:NamedIndividual ,
                              :Covenant ;
+                    :altar :AltarOfSunlight ;
                     :emblem :WarriorOfSunlight ;
                     :rewardsItem :SunlightSpear ;
                     :game "DS1" ,
-                          "DS2" ,
                           "DS3" ;
                     :name "Warriors of Sunlight" .
 

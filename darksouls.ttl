@@ -29,7 +29,20 @@
 
 ###  http://www.darksouls.com/appearsIn
 :appearsIn rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :hasVisited .
+           rdfs:subPropertyOf :hasVisited ;
+           rdf:type owl:AsymmetricProperty ,
+                    owl:IrreflexiveProperty .
+
+
+###  http://www.darksouls.com/armor
+:armor rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :usesItem ;
+       owl:inverseOf :armorOf .
+
+
+###  http://www.darksouls.com/armorOf
+:armorOf rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :usedBy .
 
 
 ###  http://www.darksouls.com/belongsTo
@@ -82,11 +95,6 @@
         rdfs:range :Emblem .
 
 
-###  http://www.darksouls.com/enemyOf
-:enemyOf rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :knowsOf .
-
-
 ###  http://www.darksouls.com/equipment
 :equipment rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf :usesItem ;
@@ -108,11 +116,6 @@
         rdf:type owl:SymmetricProperty .
 
 
-###  http://www.darksouls.com/friendOf
-:friendOf rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :knowsOf .
-
-
 ###  http://www.darksouls.com/hasItem
 :hasItem rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf owl:topObjectProperty ;
@@ -125,7 +128,7 @@
 :hasMember rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf :knowsOf ;
            owl:inverseOf :memberOf ;
-           rdfs:domain :Organization ;
+           rdfs:domain :Faction ;
            rdfs:range :Character .
 
 
@@ -148,7 +151,9 @@
 ###  http://www.darksouls.com/home
 :home rdf:type owl:ObjectProperty ;
       rdfs:subPropertyOf :hasVisited ;
-      rdf:type owl:FunctionalProperty .
+      rdf:type owl:FunctionalProperty ,
+               owl:AsymmetricProperty ,
+               owl:IrreflexiveProperty .
 
 
 ###  http://www.darksouls.com/knowsOf
@@ -187,7 +192,7 @@
 :memberOf rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf :loyalTo ;
           rdfs:domain :Character ;
-          rdfs:range :Organization .
+          rdfs:range :Faction .
 
 
 ###  http://www.darksouls.com/mentionedBy
@@ -208,9 +213,8 @@
 
 
 ###  http://www.darksouls.com/ownerOf
-:ownerOf rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :hasItem ;
-         rdf:type owl:IrreflexiveProperty .
+:ownerOf rdf:type owl:ObjectProperty ,
+                  owl:IrreflexiveProperty .
 
 
 ###  http://www.darksouls.com/parent
@@ -302,7 +306,13 @@
 ###  http://www.darksouls.com/weapon
 :weapon rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf :usesItem ;
+        owl:inverseOf :weaponOf ;
         rdfs:range :Weapon .
+
+
+###  http://www.darksouls.com/weaponOf
+:weaponOf rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :usedBy .
 
 
 #################################################################
@@ -380,16 +390,17 @@
 
 ###  http://www.darksouls.com/Actor
 :Actor rdf:type owl:Class ;
-       rdfs:subClassOf :Thing ,
-                       [ rdf:type owl:Restriction ;
-                         owl:onProperty :name ;
-                         owl:someValuesFrom rdf:PlainLiteral
-                       ] .
+       rdfs:subClassOf :Thing .
 
 
 ###  http://www.darksouls.com/Area
 :Area rdf:type owl:Class ;
       rdfs:subClassOf :Place .
+
+
+###  http://www.darksouls.com/Armor
+:Armor rdf:type owl:Class ;
+       rdfs:subClassOf :Equipment .
 
 
 ###  http://www.darksouls.com/Boss
@@ -410,7 +421,7 @@
 ###  http://www.darksouls.com/Character
 :Character rdf:type owl:Class ;
            rdfs:subClassOf :Actor ;
-           owl:disjointWith :Organization .
+           owl:disjointWith :Faction .
 
 
 ###  http://www.darksouls.com/City
@@ -425,7 +436,12 @@
 
 ###  http://www.darksouls.com/Covenant
 :Covenant rdf:type owl:Class ;
-          rdfs:subClassOf :Organization .
+          rdfs:subClassOf :Faction .
+
+
+###  http://www.darksouls.com/CurvedSword
+:CurvedSword rdf:type owl:Class ;
+             rdfs:subClassOf :Weapon .
 
 
 ###  http://www.darksouls.com/District
@@ -441,6 +457,16 @@
 ###  http://www.darksouls.com/Equipment
 :Equipment rdf:type owl:Class ;
            rdfs:subClassOf :Item .
+
+
+###  http://www.darksouls.com/Era
+:Era rdf:type owl:Class ;
+     rdfs:subClassOf :Thing .
+
+
+###  http://www.darksouls.com/Faction
+:Faction rdf:type owl:Class ;
+         rdfs:subClassOf :Actor .
 
 
 ###  http://www.darksouls.com/God
@@ -463,10 +489,6 @@
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :description ;
                         owl:someValuesFrom rdf:PlainLiteral
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :name ;
-                        owl:someValuesFrom rdf:PlainLiteral
                       ] .
 
 
@@ -487,12 +509,7 @@
 
 ###  http://www.darksouls.com/Order
 :Order rdf:type owl:Class ;
-       rdfs:subClassOf :Organization .
-
-
-###  http://www.darksouls.com/Organization
-:Organization rdf:type owl:Class ;
-              rdfs:subClassOf :Actor .
+       rdfs:subClassOf :Faction .
 
 
 ###  http://www.darksouls.com/Place
@@ -550,12 +567,18 @@
 
 ###  http://www.darksouls.com/Weapon
 :Weapon rdf:type owl:Class ;
-        rdfs:subClassOf :Item .
+        rdfs:subClassOf :Equipment .
 
 
 #################################################################
 #    Individuals
 #################################################################
+
+###  http://www.darksouls.com/AgeOfTheGods
+:AgeOfTheGods rdf:type owl:NamedIndividual ,
+                       :Era ;
+              :name "Age of the Gods" .
+
 
 ###  http://www.darksouls.com/AltarOfSunlight
 :AltarOfSunlight rdf:type owl:NamedIndividual ,
@@ -570,6 +593,12 @@
    owl:annotatedTarget :UndeadParish ;
    rdfs:comment "DS1"
  ] .
+
+
+###  http://www.darksouls.com/AncientDragons
+:AncientDragons rdf:type owl:NamedIndividual ,
+                         :Faction ;
+                :name "Ancient Dragons" .
 
 
 ###  http://www.darksouls.com/AnorLondo
@@ -678,11 +707,76 @@ The spear of the knight known as the Dragonslayer was imbued with the power of l
  ] .
 
 
+###  http://www.darksouls.com/DragonslayerSwordspear
+:DragonslayerSwordspear rdf:type owl:NamedIndividual ,
+                                 :Spear ;
+                        :mentions :AgeOfTheGods ,
+                                  :NamelessKing ;
+                        :transposedFrom :NamelessKingSoul ;
+                        :description """A dragon hunting weapon from the age of the gods. The earliest form of the cross spear, serving as both a sword and a spear.
+
+Its owner was the Nameless King, a deific hunter of dragons. The swordspear is imbued with lightning, of which he was the heir.
+
+Skill: Falling Bolt
+Hold swordspear high in the air to summon fierce lightning that descends upon distant foes.""" ;
+                        :game "DS3" ;
+                        :name "Dragonslayer Swordspear" .
+
+
 ###  http://www.darksouls.com/Drangleic
 :Drangleic rdf:type owl:NamedIndividual ,
                     :Kingdom ;
            :game "DS2" ;
            :name "Drangleic" .
+
+
+###  http://www.darksouls.com/Faraam
+:Faraam rdf:type owl:NamedIndividual ,
+                 :God ;
+        :alias "God of War" ,
+               "War God" ;
+        :domain "War" ;
+        :name "Faraam" ;
+        :title "God" .
+
+
+###  http://www.darksouls.com/FaraamSet
+:FaraamSet rdf:type owl:NamedIndividual ,
+                    :Armor ;
+           :armorOf :ForossaLionKnights ;
+           :mentions :Faraam ,
+                     :Forossa ,
+                     :ForossaLionKnights ;
+           :description """Armor named after a god of war.
+
+The armor of the Forossa Lion Knights was preserved even after the destruction of their homeland, and is mentioned in numerous legends, alongside the names of those who are said to have gone beyond death.""" ,
+                        """Armor worn by the Forossa Lion Knights.
+
+The mighty Lion Knights, worshippers of the war god Faraam, wore heavy armor and were feared for their nimble two-handed swordplay.
+
+But their legacy was cut short with the fall of Forossa.""" ;
+           :game "DS2" ,
+                 "DS3" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :FaraamSet ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """Armor named after a god of war.
+
+The armor of the Forossa Lion Knights was preserved even after the destruction of their homeland, and is mentioned in numerous legends, alongside the names of those who are said to have gone beyond death.""" ;
+   rdfs:comment "DS3"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :FaraamSet ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """Armor worn by the Forossa Lion Knights.
+
+The mighty Lion Knights, worshippers of the war god Faraam, wore heavy armor and were feared for their nimble two-handed swordplay.
+
+But their legacy was cut short with the fall of Forossa.""" ;
+   rdfs:comment "DS2"
+ ] .
 
 
 ###  http://www.darksouls.com/Firstborn
@@ -706,6 +800,20 @@ The spear of the knight known as the Dragonslayer was imbued with the power of l
        :gender "Male" ;
        :name "Flann" ;
        :title "God" .
+
+
+###  http://www.darksouls.com/Forossa
+:Forossa rdf:type owl:NamedIndividual ,
+                  :Kingdom ;
+         :name "Forossa" .
+
+
+###  http://www.darksouls.com/ForossaLionKnights
+:ForossaLionKnights rdf:type owl:NamedIndividual ,
+                             :Order ;
+                    :home :Forossa ;
+                    :alias "Lion Knights of Forossa" ;
+                    :name "Forossa Lion Knights" .
 
 
 ###  http://www.darksouls.com/FourKnightsOfGwyn
@@ -933,6 +1041,22 @@ This ring strengthens counters with pierce weapons. His lugged spear is said to 
          :name "Leo Ring" .
 
 
+###  http://www.darksouls.com/LightningStorm
+:LightningStorm rdf:type owl:NamedIndividual ,
+                         :Miracle ;
+                :mentions :AncientDragons ,
+                          :NamelessKing ,
+                          :Stormdrake ;
+                :transposedFrom :NamelessKingSoul ;
+                :description """Miracle of the Nameless King, ally to the ancient dragons. 
+
+Calls forth furious bolts of lightning.
+
+Once a slayer of dragons, the former king and wargod tamed a Stormdrake, on which he led a lifetime of battle. This miracle is likely a tale of their bond.""" ;
+                :game "DS3" ;
+                :name "Lightning Storm" .
+
+
 ###  http://www.darksouls.com/Lordran
 :Lordran rdf:type owl:NamedIndividual ,
                   :Kingdom ;
@@ -945,6 +1069,36 @@ This ring strengthens counters with pierce weapons. His lugged spear is said to 
                   :Kingdom ;
          :game "DS3" ;
          :name "Lothric" .
+
+
+###  http://www.darksouls.com/NamelessKing
+:NamelessKing rdf:type owl:NamedIndividual ,
+                       :Boss ,
+                       :God ;
+              :loyalTo :AncientDragons ;
+              :soul :NamelessKingSoul ;
+              :alias "God of War" ,
+                     "Nameless King" ;
+              :domain "War" ;
+              :game "DS3" ;
+              :gender "Male" ;
+              :title "Dragonslayer" ,
+                     "God" ,
+                     "King" .
+
+
+###  http://www.darksouls.com/NamelessKingSoul
+:NamelessKingSoul rdf:type owl:NamedIndividual ,
+                           :Soul ;
+                  :mentions :NamelessKing ;
+                  :description """Soul of the Nameless King.
+One of the twisted souls, steeped in strength.
+
+Use to acquire many souls, or transpose to extract its true strength.
+
+The Nameless King was once a dragon-slaying god of war, before he sacrificed everything to ally himself with the ancient dragons.""" ;
+                  :game "DS3" ;
+                  :name "Soul of the Nameless King" .
 
 
 ###  http://www.darksouls.com/Oceiros
@@ -1152,6 +1306,31 @@ The Princess of Sunlight Gwynevere left Anor Londo along many other deities, and
          :name "Solaire" .
 
 
+###  http://www.darksouls.com/StormCurvedSword
+:StormCurvedSword rdf:type owl:NamedIndividual ,
+                           :CurvedSword ;
+                  :mentions :AgeOfTheGods ,
+                            :AncientDragons ,
+                            :NamelessKing ,
+                            :Stormdrake ;
+                  :transposedFrom :NamelessKingSoul ;
+                  :description """Curved sword imbued with the strength of the Stormdrake.
+
+The Nameless King, ally of the ancient dragons, fought beside the Stormdrake in countless battles. When the great beast fell, the king claimed his soul, as was the custom in the age of the gods.
+
+Skill: Tornado
+Imbue blade with the wrath of storm in a spinning motion, and follow with a string attack to bear that wrath upon foes.""" ;
+                  :game "DS3" ;
+                  :name "Storm Curved Sword" .
+
+
+###  http://www.darksouls.com/Stormdrake
+:Stormdrake rdf:type owl:NamedIndividual ,
+                     :Character ;
+            :loyalTo :NamelessKing ;
+            :game "DS3" .
+
+
 ###  http://www.darksouls.com/SunPrincessRing
 :SunPrincessRing rdf:type owl:NamedIndividual ,
                           :Ring ;
@@ -1220,11 +1399,10 @@ coffin, perhaps as a final farewell.""" ;
                         :Item ;
                :mentions :Firstborn ,
                          :Gwyn ;
-               :description """A medal depicting the sun.
-Offer it to the altar to strengthen the bond with your covenant.
+               :symbolOf :Firstborn ;
+               :description """A medal depicting the sun. Offer it to the altar to strengthen the bond with your covenant.
 
-The slight warmth of the medal makes valor brim within one's bosom.
-The brave fighters who bore these medals are gone, but the sun never sets. On this day begins the contest to find the Sun's truest son.""" ,
+The slight warmth of the medal makes valor brim within one's bosom. The brave fighters who bore these medals are gone, but the sun never sets. On this day begins the contest to find the Sun's truest son.""" ,
                             """A medal received by members of the Warrior of Sunlight covenant for victory over the final foe when summoned. The summoner also gains the same medal.
 
 The medal, engraved with the holy symbol of the sun, is slightly warm, and reminds one of the great honor of a shared victory.""" ,
@@ -1245,11 +1423,9 @@ still watches closely over his warriors.""" ;
 [ rdf:type owl:Axiom ;
    owl:annotatedSource :SunlightMedal ;
    owl:annotatedProperty :description ;
-   owl:annotatedTarget """A medal depicting the sun.
-Offer it to the altar to strengthen the bond with your covenant.
+   owl:annotatedTarget """A medal depicting the sun. Offer it to the altar to strengthen the bond with your covenant.
 
-The slight warmth of the medal makes valor brim within one's bosom.
-The brave fighters who bore these medals are gone, but the sun never sets. On this day begins the contest to find the Sun's truest son.""" ;
+The slight warmth of the medal makes valor brim within one's bosom. The brave fighters who bore these medals are gone, but the sun never sets. On this day begins the contest to find the Sun's truest son.""" ;
    rdfs:comment "DS2"
  ] .
 

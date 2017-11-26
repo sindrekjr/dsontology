@@ -58,6 +58,15 @@
              rdfs:subPropertyOf :obtainedFrom .
 
 
+###  http://www.darksouls.com/dialogue
+:dialogue rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :mentions ;
+          rdf:type owl:FunctionalProperty ,
+                   owl:AsymmetricProperty ,
+                   owl:IrreflexiveProperty ;
+          rdfs:range :Dialogue .
+
+
 ###  http://www.darksouls.com/dropsItem
 :dropsItem rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf :hasItem ;
@@ -174,7 +183,8 @@
 
 
 ###  http://www.darksouls.com/mentions
-:mentions rdf:type owl:ObjectProperty .
+:mentions rdf:type owl:ObjectProperty ,
+                   owl:TransitiveProperty .
 
 
 ###  http://www.darksouls.com/obtainedFrom
@@ -542,6 +552,7 @@
                           :Gwynevere ,
                           :Lothric ,
                           :Oceiros ,
+                          :Ocelotte ,
                           :QueenOfLothric ;
                 :description """Holy water blessed by the Queen of Lothric.
 
@@ -888,12 +899,30 @@ This ring strengthens counters with pierce weapons. His lugged spear is said to 
 ###  http://www.darksouls.com/Oceiros
 :Oceiros rdf:type owl:NamedIndividual ,
                   :Boss ;
+         :dialogue :OceirosDialogue1 ;
          :home :Lothric ;
          :alias "Consumed King" ;
          :game "DS3" ;
          :gender "Male" ;
          :name "Oceiros" ;
          :title "King" .
+
+
+###  http://www.darksouls.com/OceirosDialogue1
+:OceirosDialogue1 rdf:type owl:NamedIndividual ,
+                           :Dialogue ;
+                  :mentions :Ocelotte ;
+                  :speaker :Oceiros ;
+                  :description "Ah, you ignorant slaves. Finally taken notice, have you? Of the power of my beloved Ocelotte, child of dragons. Well, I will not give him up, for he is all that I have." .
+
+
+###  http://www.darksouls.com/Ocelotte
+:Ocelotte rdf:type owl:NamedIndividual ,
+                   :Character ;
+          :parent :QueenOfLothric ;
+          :alias "Child of Dragons" ;
+          :gender "Male" ;
+          :name "Ocelotte" .
 
 
 ###  http://www.darksouls.com/OldDragonslayer
@@ -993,7 +1022,8 @@ Use to acquire a large amount of souls, or to create a unique weapon.""" ;
                 :game "DS3" ;
                 :gender "Female" ;
                 :name "Goddess of Fertility and Bounty" ;
-                :title "Queen" ,
+                :title "God" ,
+                       "Queen" ,
                        "Queen of Lothric" .
 
 

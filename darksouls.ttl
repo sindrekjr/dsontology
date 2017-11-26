@@ -13,9 +13,8 @@
 #################################################################
 
 ###  http://www.darksouls.com/adjacentTo
-:adjacentTo rdf:type owl:ObjectProperty ;
-            rdfs:subPropertyOf owl:topObjectProperty ;
-            rdf:type owl:SymmetricProperty ,
+:adjacentTo rdf:type owl:ObjectProperty ,
+                     owl:SymmetricProperty ,
                      owl:IrreflexiveProperty ;
             rdfs:domain :Place ;
             rdfs:range :Place .
@@ -36,18 +35,19 @@
 
 ###  http://www.darksouls.com/armor
 :armor rdf:type owl:ObjectProperty ;
-       rdfs:subPropertyOf :usesItem ;
-       owl:inverseOf :armorOf .
+       rdfs:subPropertyOf :equipment ;
+       owl:inverseOf :armorOf ;
+       rdfs:range :Armor .
 
 
 ###  http://www.darksouls.com/armorOf
 :armorOf rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :usedBy .
+         rdfs:subPropertyOf :equipmentOf ;
+         rdfs:domain :Armor .
 
 
 ###  http://www.darksouls.com/belongsTo
 :belongsTo rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf owl:topObjectProperty ;
            owl:inverseOf :ownerOf ;
            rdf:type owl:IrreflexiveProperty ;
            rdfs:domain :Item ;
@@ -63,22 +63,18 @@
        owl:propertyDisjointWith :parent .
 
 
-###  http://www.darksouls.com/commonSoul
-:commonSoul rdf:type owl:ObjectProperty ;
-            rdfs:subPropertyOf :commonality ;
-            owl:propertyChainAxiom ( :soul
-                                     :belongsTo
-                                   ) .
-
-
-###  http://www.darksouls.com/commonality
-:commonality rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf owl:topObjectProperty .
+###  http://www.darksouls.com/craftInto
+:craftInto rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :providesItem ;
+           owl:inverseOf :craftedFrom ;
+           rdf:type owl:InverseFunctionalProperty ;
+           rdfs:domain :Soul .
 
 
 ###  http://www.darksouls.com/craftedFrom
 :craftedFrom rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf :obtainedFrom .
+             rdfs:subPropertyOf :providedBy ;
+             rdfs:range :Soul .
 
 
 ###  http://www.darksouls.com/dropsItem
@@ -95,16 +91,27 @@
         rdfs:range :Emblem .
 
 
+###  http://www.darksouls.com/enemyOf
+:enemyOf rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :knowsOf .
+
+
 ###  http://www.darksouls.com/equipment
 :equipment rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf :usesItem ;
+           owl:inverseOf :equipmentOf ;
            rdfs:range :Equipment .
 
 
+###  http://www.darksouls.com/equipmentOf
+:equipmentOf rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :usedBy ;
+             rdfs:domain :Equipment .
+
+
 ###  http://www.darksouls.com/family
-:family rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf owl:topObjectProperty ;
-        rdf:type owl:SymmetricProperty ,
+:family rdf:type owl:ObjectProperty ,
+                 owl:SymmetricProperty ,
                  owl:TransitiveProperty ;
         rdfs:domain :Character ;
         rdfs:range :Character .
@@ -112,16 +119,22 @@
 
 ###  http://www.darksouls.com/fights
 :fights rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf :knowsOf ;
+        rdfs:subPropertyOf :enemyOf ;
         rdf:type owl:SymmetricProperty .
 
 
 ###  http://www.darksouls.com/hasItem
-:hasItem rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf owl:topObjectProperty ;
-         rdf:type owl:IrreflexiveProperty ;
+:hasItem rdf:type owl:ObjectProperty ,
+                  owl:IrreflexiveProperty ;
          rdfs:domain :Actor ;
          rdfs:range :Item .
+
+
+###  http://www.darksouls.com/hasLoyaltyOf
+:hasLoyaltyOf rdf:type owl:ObjectProperty ;
+              owl:inverseOf :loyalTo ;
+              rdfs:domain :Actor ;
+              rdfs:range :Actor .
 
 
 ###  http://www.darksouls.com/hasMember
@@ -134,7 +147,6 @@
 
 ###  http://www.darksouls.com/hasSymbol
 :hasSymbol rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf owl:topObjectProperty ;
            owl:inverseOf :symbolOf ;
            rdf:type owl:AsymmetricProperty ,
                     owl:IrreflexiveProperty ;
@@ -165,9 +177,14 @@
     rdfs:range :Place .
 
 
+###  http://www.darksouls.com/isWorshippedBy
+:isWorshippedBy rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :hasLoyaltyOf ;
+                owl:inverseOf :worships .
+
+
 ###  http://www.darksouls.com/knowsOf
 :knowsOf rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf owl:topObjectProperty ;
          rdfs:domain :Actor ;
          rdfs:range :Actor .
 
@@ -185,45 +202,38 @@
 
 
 ###  http://www.darksouls.com/location
-:location rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf owl:topObjectProperty ;
-          rdf:type owl:TransitiveProperty ;
+:location rdf:type owl:ObjectProperty ,
+                   owl:TransitiveProperty ;
           rdfs:range :Place .
 
 
 ###  http://www.darksouls.com/loyalTo
 :loyalTo rdf:type owl:ObjectProperty ;
-         rdfs:subPropertyOf :knowsOf ;
-         rdf:type owl:TransitiveProperty .
+         rdfs:subPropertyOf :knowsOf .
 
 
 ###  http://www.darksouls.com/memberOf
 :memberOf rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf :loyalTo ;
+          rdf:type owl:TransitiveProperty ;
           rdfs:domain :Character ;
           rdfs:range :Faction .
 
 
 ###  http://www.darksouls.com/mentionedBy
 :mentionedBy rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf owl:topObjectProperty ;
              owl:inverseOf :mentions .
 
 
 ###  http://www.darksouls.com/mentions
-:mentions rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf owl:topObjectProperty .
-
-
-###  http://www.darksouls.com/obtainedFrom
-:obtainedFrom rdf:type owl:ObjectProperty ;
-              rdfs:subPropertyOf owl:topObjectProperty ;
-              rdf:type owl:IrreflexiveProperty .
+:mentions rdf:type owl:ObjectProperty .
 
 
 ###  http://www.darksouls.com/ownerOf
 :ownerOf rdf:type owl:ObjectProperty ,
-                  owl:IrreflexiveProperty .
+                  owl:IrreflexiveProperty ;
+         rdfs:domain :Actor ;
+         rdfs:range :Item .
 
 
 ###  http://www.darksouls.com/parent
@@ -233,20 +243,40 @@
                  owl:IrreflexiveProperty .
 
 
+###  http://www.darksouls.com/providedBy
+:providedBy rdf:type owl:ObjectProperty ;
+            owl:inverseOf :providesItem ;
+            rdf:type owl:AsymmetricProperty ,
+                     owl:IrreflexiveProperty ;
+            rdfs:domain :Item .
+
+
+###  http://www.darksouls.com/providesItem
+:providesItem rdf:type owl:ObjectProperty ,
+                       owl:AsymmetricProperty ,
+                       owl:IrreflexiveProperty ;
+              rdfs:domain [ rdf:type owl:Class ;
+                            owl:unionOf ( :Actor
+                                          :Item
+                                        )
+                          ] ;
+              rdfs:range :Item .
+
+
 ###  http://www.darksouls.com/rewardedBy
 :rewardedBy rdf:type owl:ObjectProperty ;
-            rdfs:subPropertyOf :obtainedFrom ;
+            rdfs:subPropertyOf :providedBy ;
             owl:inverseOf :rewardsItem .
 
 
 ###  http://www.darksouls.com/rewardsItem
 :rewardsItem rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf :hasItem .
+             rdfs:subPropertyOf :providesItem .
 
 
 ###  http://www.darksouls.com/sellsItem
 :sellsItem rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :hasItem ;
+           rdfs:subPropertyOf :providesItem ;
            owl:inverseOf :soldBy .
 
 
@@ -261,7 +291,8 @@
 
 ###  http://www.darksouls.com/soldBy
 :soldBy rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf :obtainedFrom .
+        rdfs:subPropertyOf :providedBy ;
+        rdfs:range :Character .
 
 
 ###  http://www.darksouls.com/soul
@@ -273,7 +304,8 @@
 
 ###  http://www.darksouls.com/soulOf
 :soulOf rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf :belongsTo .
+        rdfs:subPropertyOf :belongsTo ;
+        rdfs:domain :Soul .
 
 
 ###  http://www.darksouls.com/spouse
@@ -289,16 +321,25 @@
                    owl:IrreflexiveProperty .
 
 
-###  http://www.darksouls.com/tradedFor
-:tradedFor rdf:type owl:ObjectProperty ;
-           rdfs:subPropertyOf :obtainedFrom ;
-           rdf:type owl:SymmetricProperty .
+###  http://www.darksouls.com/tradeFor
+:tradeFor rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :providesItem ;
+          rdf:type owl:InverseFunctionalProperty .
 
 
 ###  http://www.darksouls.com/transposedFrom
 :transposedFrom rdf:type owl:ObjectProperty ;
-                rdfs:subPropertyOf :obtainedFrom ;
-                rdf:type owl:FunctionalProperty .
+                rdfs:subPropertyOf :providedBy ;
+                owl:inverseOf :transposition ;
+                rdf:type owl:FunctionalProperty ;
+                rdfs:range :Soul .
+
+
+###  http://www.darksouls.com/transposition
+:transposition rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf :providesItem ;
+               rdf:type owl:InverseFunctionalProperty ;
+               rdfs:domain :Soul .
 
 
 ###  http://www.darksouls.com/usedBy
@@ -314,14 +355,20 @@
 
 ###  http://www.darksouls.com/weapon
 :weapon rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf :usesItem ;
+        rdfs:subPropertyOf :equipment ;
         owl:inverseOf :weaponOf ;
         rdfs:range :Weapon .
 
 
 ###  http://www.darksouls.com/weaponOf
 :weaponOf rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :usedBy .
+          rdfs:subPropertyOf :equipmentOf ;
+          rdfs:domain :Weapon .
+
+
+###  http://www.darksouls.com/worships
+:worships rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :loyalTo .
 
 
 #################################################################
@@ -329,29 +376,24 @@
 #################################################################
 
 ###  http://www.darksouls.com/alias
-:alias rdf:type owl:DatatypeProperty ;
-       rdfs:subPropertyOf owl:topDataProperty .
+:alias rdf:type owl:DatatypeProperty .
 
 
 ###  http://www.darksouls.com/description
-:description rdf:type owl:DatatypeProperty ;
-             rdfs:subPropertyOf owl:topDataProperty .
+:description rdf:type owl:DatatypeProperty .
 
 
 ###  http://www.darksouls.com/dialogue
-:dialogue rdf:type owl:DatatypeProperty ;
-          rdfs:subPropertyOf owl:topDataProperty .
+:dialogue rdf:type owl:DatatypeProperty .
 
 
 ###  http://www.darksouls.com/domain
 :domain rdf:type owl:DatatypeProperty ;
-        rdfs:subPropertyOf owl:topDataProperty ;
         rdfs:domain :God .
 
 
 ###  http://www.darksouls.com/game
 :game rdf:type owl:DatatypeProperty ;
-      rdfs:subPropertyOf owl:topDataProperty ;
       rdfs:range [ rdf:type rdfs:Datatype ;
                    owl:oneOf [ rdf:type rdf:List ;
                                rdf:first "DS1" ;
@@ -367,9 +409,8 @@
 
 
 ###  http://www.darksouls.com/gender
-:gender rdf:type owl:DatatypeProperty ;
-        rdfs:subPropertyOf owl:topDataProperty ;
-        rdf:type owl:FunctionalProperty ;
+:gender rdf:type owl:DatatypeProperty ,
+                 owl:FunctionalProperty ;
         rdfs:domain :Character ;
         rdfs:range [ rdf:type rdfs:Datatype ;
                      owl:oneOf [ rdf:type rdf:List ;
@@ -384,13 +425,11 @@
 
 ###  http://www.darksouls.com/name
 :name rdf:type owl:DatatypeProperty ;
-      rdfs:subPropertyOf :alias ;
-      rdf:type owl:FunctionalProperty .
+      rdfs:subPropertyOf :alias .
 
 
 ###  http://www.darksouls.com/title
-:title rdf:type owl:DatatypeProperty ;
-       rdfs:subPropertyOf :alias .
+:title rdf:type owl:DatatypeProperty .
 
 
 #################################################################
@@ -583,7 +622,11 @@
 
 ###  http://www.darksouls.com/Soul
 :Soul rdf:type owl:Class ;
-      rdfs:subClassOf :Consumable .
+      rdfs:subClassOf :Consumable ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :soulOf ;
+                        owl:someValuesFrom :Character
+                      ] .
 
 
 ###  http://www.darksouls.com/Spear
@@ -1019,6 +1062,7 @@ But their legacy was cut short with the fall of Forossa.""" ;
 :ForossaLionKnights rdf:type owl:NamedIndividual ,
                              :Order ;
                     :home :Forossa ;
+                    :worships :Faraam ;
                     :alias "Lion Knights of Forossa" ;
                     :name "Forossa Lion Knights" .
 
@@ -1113,6 +1157,7 @@ Much of this resplendent tale of father and son, while epic, remains tragically 
       :child :Firstborn ,
              :Gwyndolin ,
              :Gwynevere ;
+      :fights :AncientDragons ;
       :home :AnorLondo ;
       :soul :GwynSoul ;
       :weapon :GreatLordGreatsword ;
@@ -1142,7 +1187,7 @@ Much of this resplendent tale of father and son, while epic, remains tragically 
 :GwynSoul rdf:type owl:NamedIndividual ,
                    :Soul ;
           :mentions :Gwyn ;
-          :tradedFor :SunlightSpear ;
+          :tradeFor :SunlightSpear ;
           :description """Soul of Gwyn, the Lord of Sunlight
 and Cinder, who linked the First Flame.
 
@@ -1155,7 +1200,7 @@ is a powerful thing indeed.""" ;
 
 [ rdf:type owl:Axiom ;
    owl:annotatedSource :GwynSoul ;
-   owl:annotatedProperty :tradedFor ;
+   owl:annotatedProperty :tradeFor ;
    owl:annotatedTarget :SunlightSpear ;
    rdfs:comment "DS1"
  ] .
@@ -1236,6 +1281,14 @@ Use the soul of Gwyn's lastborn to acquire a huge amount of souls, or to create 
                    :location :Drangleic ;
                    :game "DS2" ;
                    :name "Heide's Tower of Flame" .
+
+
+###  http://www.darksouls.com/HeirsOfTheSun
+:HeirsOfTheSun rdf:type owl:NamedIndividual ,
+                        :Covenant ;
+               owl:sameAs :WarriorsOfSunlight ;
+               :game "DS2" ;
+               :name "Heirs of the Sun" .
 
 
 ###  http://www.darksouls.com/Izalith
@@ -1388,7 +1441,7 @@ The Nameless King was once a dragon-slaying god of war, before he sacrificed eve
 :OldDragonslayerSoul rdf:type owl:NamedIndividual ,
                               :Soul ;
                      :mentions :OldDragonslayer ;
-                     :tradedFor :DragonslayerSpear ;
+                     :tradeFor :DragonslayerSpear ;
                      :description """The Old Dragonslayer is reminiscent of a certain knight that appears in old legends.
 
 Use the special soul of the Old Dragonslayer to acquire numerous souls, or to create something of great worth.""" ;
@@ -1551,6 +1604,42 @@ The Princess of Sunlight Gwynevere left Anor Londo along many other deities, and
 
 The Princess of Sunlight Gwynevere left Anor Londo along many other deities, and later became wife to Flame God Flann.""" ;
    rdfs:comment "DS1"
+ ] .
+
+
+###  http://www.darksouls.com/SacredOath
+:SacredOath rdf:type owl:NamedIndividual ,
+                     :Miracle ;
+            :mentions :Firstborn ,
+                      :Gwyn ,
+                      :WarriorsOfSunlight ;
+            :rewardedBy :WarriorsOfSunlight ;
+            :description """An ancient miracle said to have been devised by warriors who once served the God of Sun.
+
+Provides a temporary boost to the attack and defense of its caster and all nearby allies.""" ,
+                         """Miracle of those chosen by the Sunlight covenant. Temporarily boosts attack and damage absorption for self and those in the vicinity.
+
+This is the tale of the Sun's firstborn, his faithful first knight, and the brave dragonslayer who served them both.""" ;
+            :game "DS2" ,
+                  "DS3" ;
+            :name "Sacred Oath" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :SacredOath ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """An ancient miracle said to have been devised by warriors who once served the God of Sun.
+
+Provides a temporary boost to the attack and defense of its caster and all nearby allies.""" ;
+   rdfs:comment "DS2"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :SacredOath ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """Miracle of those chosen by the Sunlight covenant. Temporarily boosts attack and damage absorption for self and those in the vicinity.
+
+This is the tale of the Sun's firstborn, his faithful first knight, and the brave dragonslayer who served them both.""" ;
+   rdfs:comment "DS3"
  ] .
 
 
@@ -1801,12 +1890,57 @@ The tales of Gwyn's Archdragon hunts describe the inception of the Age of Fire."
             :name "Undead Burg" .
 
 
+###  http://www.darksouls.com/UndeadCrypt
+:UndeadCrypt rdf:type owl:NamedIndividual ,
+                      :Place ;
+             :location :Drangleic ;
+             :game "DS2" ;
+             :name "Undead Crypt" .
+
+
 ###  http://www.darksouls.com/UndeadParish
 :UndeadParish rdf:type owl:NamedIndividual ,
                        :District ;
               :adjacentTo :UndeadBurg ;
               :game "DS1" ;
               :name "Undead Parish" .
+
+
+###  http://www.darksouls.com/Velstadt
+:Velstadt rdf:type owl:NamedIndividual ,
+                   :Boss ;
+          :appearsIn :UndeadCrypt ;
+          :loyalTo :Vendrick ;
+          :soul :VelstadtSoul ;
+          :alias "The Royal Aegis" ;
+          :game "DS2" ;
+          :gender "Male" ;
+          :name "Velstadt" ;
+          :title "Knight" .
+
+
+###  http://www.darksouls.com/VelstadtSoul
+:VelstadtSoul rdf:type owl:NamedIndividual ,
+                       :Soul ;
+              :mentions :Velstadt ,
+                        :Vendrick ;
+              :tradeFor :SacredOath ;
+              :description """Soul of the Velstadt, defender of the King inside the Undead Crypt.
+
+Velstadt was always at the King's side, as if he were his lord's own shadow. After the King retired to the Undead Crypt, Velstadt followed, never to return.
+
+Use the special soul of this knight to acquire numerous souls, or to create something of great worth.""" ;
+              :name "Soul of Velstadt" .
+
+
+###  http://www.darksouls.com/Vendrick
+:Vendrick rdf:type owl:NamedIndividual ,
+                   :Character ;
+          :appearsIn :UndeadCrypt ;
+          :home :Drangleic ;
+          :game "DS2" ;
+          :name "Vendrick" ;
+          :title "King" .
 
 
 ###  http://www.darksouls.com/WarriorOfSunlight
@@ -1835,6 +1969,7 @@ Warriors of Sunlight are brilliantly beaming co-operators who place their golden
                     :altar :AltarOfSunlight ;
                     :emblem :WarriorOfSunlight ;
                     :rewardsItem :SunlightSpear ;
+                    :worships :Firstborn ;
                     :game "DS1" ,
                           "DS3" ;
                     :name "Warriors of Sunlight" .

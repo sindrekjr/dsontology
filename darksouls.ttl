@@ -111,6 +111,19 @@
                   owl:IrreflexiveProperty .
 
 
+###  http://www.darksouls.com/devouredBy
+:devouredBy rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :killedBy ;
+            owl:inverseOf :devours ;
+            rdf:type owl:IrreflexiveProperty .
+
+
+###  http://www.darksouls.com/devours
+:devours rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :kills ;
+         rdf:type owl:IrreflexiveProperty .
+
+
 ###  http://www.darksouls.com/dropsItem
 :dropsItem rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf :hasItem ;
@@ -215,6 +228,19 @@
 :isWorshippedBy rdf:type owl:ObjectProperty ;
                 rdfs:subPropertyOf :hasLoyaltyOf ;
                 owl:inverseOf :worships .
+
+
+###  http://www.darksouls.com/killedBy
+:killedBy rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :enemyOf ;
+          owl:inverseOf :kills ;
+          rdf:type owl:AsymmetricProperty .
+
+
+###  http://www.darksouls.com/kills
+:kills rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf :enemyOf ;
+       rdf:type owl:AsymmetricProperty .
 
 
 ###  http://www.darksouls.com/knowsOf
@@ -747,6 +773,7 @@ Swallowed by the Dark with its master, this sword is tainted by the abyss, and n
 :Aldrich rdf:type owl:NamedIndividual ,
                   :Boss ;
          :appearsIn :AnorLondoCathedral ;
+         :devours :Gwyndolin ;
          :soul :AldrichSoul ;
          :alias "Devourer of Gods" ;
          :game "DS3" ;

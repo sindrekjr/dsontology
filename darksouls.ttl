@@ -53,6 +53,11 @@
            rdfs:range :Actor .
 
 
+###  http://www.darksouls.com/betrays
+:betrays rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf :enemyOf .
+
+
 ###  http://www.darksouls.com/child
 :child rdf:type owl:ObjectProperty ;
        rdfs:subPropertyOf :family ;
@@ -74,6 +79,21 @@
 :craftedFrom rdf:type owl:ObjectProperty ;
              rdfs:subPropertyOf :providedBy ;
              rdfs:range :Soul .
+
+
+###  http://www.darksouls.com/createdBy
+:createdBy rdf:type owl:ObjectProperty ;
+           owl:inverseOf :creatorOf ;
+           rdf:type owl:FunctionalProperty ,
+                    owl:AsymmetricProperty ,
+                    owl:IrreflexiveProperty .
+
+
+###  http://www.darksouls.com/creatorOf
+:creatorOf rdf:type owl:ObjectProperty ,
+                    owl:InverseFunctionalProperty ,
+                    owl:AsymmetricProperty ,
+                    owl:IrreflexiveProperty .
 
 
 ###  http://www.darksouls.com/defeatedBy
@@ -228,7 +248,7 @@
 
 ###  http://www.darksouls.com/memberOf
 :memberOf rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf :loyalTo ;
+          rdfs:subPropertyOf :knowsOf ;
           rdf:type owl:TransitiveProperty ;
           rdfs:domain :Character ;
           rdfs:range :Faction .
@@ -709,6 +729,12 @@ Swallowed by the Dark with its master, this sword is tainted by the abyss, and n
                  :name "Abyss Greatsword" .
 
 
+###  http://www.darksouls.com/AgeOfFire
+:AgeOfFire rdf:type owl:NamedIndividual ,
+                    :Era ;
+           :name "Age of Fire" .
+
+
 ###  http://www.darksouls.com/AgeOfTheGods
 :AgeOfTheGods rdf:type owl:NamedIndividual ,
                        :Era ;
@@ -739,7 +765,7 @@ Use to acquire many souls, or transpose to extract its true strength.
 
 When Aldrich ruminated on the fading of the fire, it inspired visions of a coming age of the deep sea. He knew the path would be arduous, but he had no fear. He would devour the gods himself.""" ;
              :name "Soul of Aldrich" ;
-             :title "Twisted" .
+             :title "Twisted Soul" .
 
 
 ###  http://www.darksouls.com/AltarOfSunlight
@@ -821,7 +847,7 @@ The legend that Artorias repelled the Abyss only told half the story.
 It seems that he was defeated, and his honor preserved, by some unsung hero, who is the true victor of the Abyss.""" ;
               :game "DS1" ;
               :name "Soul of Artorias" ;
-              :title "Dark" .
+              :title "Dark Soul" .
 
 
 ###  http://www.darksouls.com/Astora
@@ -1157,6 +1183,38 @@ But their legacy was cut short with the fall of Forossa.""" ;
                     :name "Forossa Lion Knights" .
 
 
+###  http://www.darksouls.com/FourKings
+:FourKings rdf:type owl:NamedIndividual ,
+                    :Boss ;
+           :appearsIn :Abyss ;
+           :home :NewLondo ;
+           :soul :FourKingsBequeathedSoul ;
+           :game "DS1" ;
+           :name "Four Kings" ;
+           :title "King" .
+
+
+###  http://www.darksouls.com/FourKingsBequeathedSoul
+:FourKingsBequeathedSoul rdf:type owl:NamedIndividual ,
+                                  :Soul ;
+                         :mentions :AgeOfFire ,
+                                   :FourKings ,
+                                   :Gwyn ,
+                                   :NewLondo ;
+                         :description """Soul of one of the Four Kings, who fell to
+Dark. A fragment of a Lord Soul discovered
+at the dawn of the Age of Fire.
+
+Lord Gwyn recognized the foresight of these
+four great leaders of New Londo, and granted
+them their ranks and the fragments of a
+great soul. Although this is not a full Lord
+Soul, it can still satiate the Lordvessel.""" ;
+                         :game "DS1" ;
+                         :name "Bequeathed Lord Soul Shard" ;
+                         :title "Lord Soul" .
+
+
 ###  http://www.darksouls.com/FourKnightsOfGwyn
 :FourKnightsOfGwyn rdf:type owl:NamedIndividual ,
                             :Order ;
@@ -1342,7 +1400,7 @@ Special beings have special souls.
 Use the soul of Gwyn's lastborn to acquire a huge amount of souls, or to create a unique weapon.""" ;
                :game "DS1" ;
                :name "Soul of Gwyndolin" ;
-               :title "Special" .
+               :title "Special Soul" .
 
 
 ###  http://www.darksouls.com/Gwynevere
@@ -1429,6 +1487,15 @@ Once a slayer of dragons, the former king and wargod tamed a Stormdrake, on whic
                 :name "Lightning Storm" .
 
 
+###  http://www.darksouls.com/Logan
+:Logan rdf:type owl:NamedIndividual ,
+                :Character ;
+       :appearsIn :DukeArchives ;
+       :creatorOf :WhiteDragonBreath ;
+       :alias "Big Hat Logan" ;
+       :name "Logan" .
+
+
 ###  http://www.darksouls.com/Lordran
 :Lordran rdf:type owl:NamedIndividual ,
                   :Kingdom ;
@@ -1468,7 +1535,46 @@ Once a slayer of dragons, the former king and wargod tamed a Stormdrake, on whic
 
 Ancient Manus was clearly once human. But he became the Father of the Abyss after his humanity went wild, eternally seeking his precious broken pendant.""" ;
            :name "Soul of Manus" ;
-           :title "Dark" .
+           :title "Dark Soul" .
+
+
+###  http://www.darksouls.com/MoonlightGreatsword
+:MoonlightGreatsword rdf:type owl:NamedIndividual ,
+                              :Greatsword ;
+                     :mentions :Oceiros ,
+                               :Seath ;
+                     :description """Legendary dragon weapon associated with Seath the
+paledrake.
+
+Charge strong attack to its limit to unleash moonlight wave.
+
+Oceiros, the Consumed King, was infatuated with the
+search for moonlight, but in the end, it never revealed itself
+to him.""" ,
+                                  "This sword, one of the rare dragon weapons, came from the tail of Seath the Scaleless, the pale white dragon who betrayed his own. Seath is the grandfather of sorcery, and this sword is imbued with his magic, which shall be unleashed as a wave of moonlight." ;
+                     :game "DS1" ;
+                     :name "Moonlight Greatsword" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :MoonlightGreatsword ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """Legendary dragon weapon associated with Seath the
+paledrake.
+
+Charge strong attack to its limit to unleash moonlight wave.
+
+Oceiros, the Consumed King, was infatuated with the
+search for moonlight, but in the end, it never revealed itself
+to him.""" ;
+   rdfs:comment "DS3"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :MoonlightGreatsword ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget "This sword, one of the rare dragon weapons, came from the tail of Seath the Scaleless, the pale white dragon who betrayed his own. Seath is the grandfather of sorcery, and this sword is imbued with his magic, which shall be unleashed as a wave of moonlight." ;
+   rdfs:comment "DS1"
+ ] .
 
 
 ###  http://www.darksouls.com/MoonlightRobe
@@ -1515,6 +1621,14 @@ The Nameless King was once a dragon-slaying god of war, before he sacrificed eve
                   :name "Soul of the Nameless King" .
 
 
+###  http://www.darksouls.com/NewLondo
+:NewLondo rdf:type owl:NamedIndividual ,
+                   :City ;
+          :location :Lordran ;
+          :game "DS1" ;
+          :name "New Londo" .
+
+
 ###  http://www.darksouls.com/Oceiros
 :Oceiros rdf:type owl:NamedIndividual ,
                   :Boss ;
@@ -1533,6 +1647,21 @@ The Nameless King was once a dragon-slaying god of war, before he sacrificed eve
    owl:annotatedTarget "Ah, you ignorant slaves. Finally taken notice, have you? Of the power of my beloved Ocelotte, child of dragons. Well, I will not give him up, for he is all that I have." ;
    rdfs:comment "DS3"
  ] .
+
+
+###  http://www.darksouls.com/OceirosSoul
+:OceirosSoul rdf:type owl:NamedIndividual ,
+                      :Soul ;
+             :mentions :Oceiros ;
+             :transposition :MoonlightGreatsword ,
+                            :WhiteDragonBreath ;
+             :description """Soul of Oceiros, the Consumed King.
+One of the twisted souls, steeped in strength.
+Use to acquire numerous souls, or transpose to extract its
+true strength.""" ;
+             :game "DS3" ;
+             :name "Soul of Consumed Oceiros" ;
+             :title "Twisted Soul" .
 
 
 ###  http://www.darksouls.com/Ocelotte
@@ -1642,7 +1771,7 @@ Special beings have special souls. Lord Gwyn granted this soul to his four most 
 Use to acquire a large amount of souls, or to create a unique weapon.""" ;
               :game "DS1" ;
               :name "Soul of Ornstein" ;
-              :title "Special" .
+              :title "Special Soul" .
 
 [ rdf:type owl:Axiom ;
    owl:annotatedSource :OrnsteinSoul ;
@@ -1781,6 +1910,43 @@ Provides a temporary boost to the attack and defense of its caster and all nearb
 This is the tale of the Sun's firstborn, his faithful first knight, and the brave dragonslayer who served them both.""" ;
    rdfs:comment "DS3"
  ] .
+
+
+###  http://www.darksouls.com/Seath
+:Seath rdf:type owl:NamedIndividual ,
+                :Boss ;
+       :appearsIn :DukeArchives ;
+       :betrays :AncientDragons ;
+       :dropsItem :MoonlightGreatsword ;
+       :loyalTo :Gwyn ;
+       :memberOf :AncientDragons ;
+       :soul :SeathBequeathedSoul ;
+       :alias "Grandfather of Sorcery" ,
+              "Seath the Scaleless" ;
+       :game "DS1" ;
+       :gender "Male" ;
+       :name "Seath" ;
+       :title "Duke" .
+
+
+###  http://www.darksouls.com/SeathBequeathedSoul
+:SeathBequeathedSoul rdf:type owl:NamedIndividual ,
+                              :Soul ;
+                     :mentions :AgeOfFire ,
+                               :Gwyn ,
+                               :Seath ;
+                     :description """Soul of the albino Seath the Scaleless.
+A fragment of a Lord Soul discovered
+at the dawn of the Age of Fire.
+
+Seath allied with Lord Gwyn and turned upon
+the dragons, and for this he was awarded
+Dukedom, embraced by the royalty, and given
+a fragment of a great soul. Although just a
+piece, it will still satiate the Lordvessel.""" ;
+                     :game "DS1" ;
+                     :name "Bequeathed Lord Soul Shard" ;
+                     :title "Lord Soul" .
 
 
 ###  http://www.darksouls.com/Solaire
@@ -2119,6 +2285,44 @@ Warriors of Sunlight are brilliantly beaming co-operators who place their golden
 :WayOfBlue rdf:type owl:NamedIndividual ,
                     :Covenant ;
            :name "Way of Blue" .
+
+
+###  http://www.darksouls.com/WhiteDragonBreath
+:WhiteDragonBreath rdf:type owl:NamedIndividual ,
+                            :Sorcery ;
+                   :mentions :AncientDragons ,
+                             :Logan ,
+                             :Oceiros ,
+                             :Seath ;
+                   :description "Sorcery developed by Logan during his infatuation with Seath the Scaleless. Emit crystal breath of Seath the Scaleless. Although it no longer causes curses, what madness caused old Big Hat to appropriate this frightful power of the ancient dragons?" ,
+                                """Sorcery of the deluded Consumed King Oceiros.
+Emits crystal breath of Seath the Scaleless.
+Crystal breath has piercing qualities.
+Seath's research seemed to strike a chord with old Big Hat
+who, in his mad, disrobed state, made divine works such as
+this, his own. Oceiros was no doubt edified by this.""" ;
+                   :game "DS1" ,
+                         "DS3" ;
+                   :name "White Dragon Breath" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :WhiteDragonBreath ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget "Sorcery developed by Logan during his infatuation with Seath the Scaleless. Emit crystal breath of Seath the Scaleless. Although it no longer causes curses, what madness caused old Big Hat to appropriate this frightful power of the ancient dragons?" ;
+   rdfs:comment "DS1"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource :WhiteDragonBreath ;
+   owl:annotatedProperty :description ;
+   owl:annotatedTarget """Sorcery of the deluded Consumed King Oceiros.
+Emits crystal breath of Seath the Scaleless.
+Crystal breath has piercing qualities.
+Seath's research seemed to strike a chord with old Big Hat
+who, in his mad, disrobed state, made divine works such as
+this, his own. Oceiros was no doubt edified by this.""" ;
+   rdfs:comment "DS3"
+ ] .
 
 
 ###  http://www.darksouls.com/WolfRing
